@@ -3,7 +3,6 @@
 /public/storage
 /storage/*.key
 /.idea
-/.git
 /.vagrant
 Homestead.json
 Homestead.yaml
