@@ -18,8 +18,8 @@ $app = new Illuminate\Foundation\Application(
 $app->useEnvironmentPath($app->basePath().'/config');
 $envContent = 'online';
 
-if(file_exists($app->basePath().'/config/.env')){
-    $envContent = file_get_contents($app->basePath().'/config/.env');
+if(file_exists($app->basePath().'/config/env/.env')){
+    $envContent = file_get_contents($app->basePath().'/config/env/.env');
     $envContent = trim($envContent);
 }
 
@@ -29,11 +29,11 @@ if(@$_SERVER['HTTP_HOST'] == 'maimiatree.com' ) {
 
 $envContent = $envContent?:'online';
 
-if(file_exists($app->basePath().'/config/.env.'.$envContent)){
-    $app->loadEnvironmentFrom('.env.'.$envContent);
-    $app->useStoragePath('/data/www/storage/'.$envContent.'.maimiatree.com');
+if(file_exists($app->basePath().'/config/env/.env.'.$envContent)){
+    $app->loadEnvironmentFrom('env/.env.'.$envContent);
+    $app->useStoragePath('/data/www/storage/'.$envContent.'.maimaitree.com');
 }
-
+// dd('/data/www/storage/'.$envContent.'.maimaitree.com');
 /*
 |--------------------------------------------------------------------------
 | Bind Important Interfaces
