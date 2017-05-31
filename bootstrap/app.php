@@ -33,7 +33,7 @@ if(file_exists($app->basePath().'/config/env/.env.'.$envContent)){
     $app->loadEnvironmentFrom('env/.env.'.$envContent);
     $app->useStoragePath('/data/www/storage/'.$envContent.'.maimaitree.com');
 }
-// dd('/data/www/storage/'.$envContent.'.maimaitree.com');
+
 /*
 |--------------------------------------------------------------------------
 | Bind Important Interfaces
