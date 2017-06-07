@@ -39,7 +39,8 @@ class RouteServiceProvider extends ServiceProvider
 
         $this->mapWebRoutes();
 
-        //
+        $this->mapBackendRoutes();
+
     }
 
     /**
@@ -65,9 +66,26 @@ class RouteServiceProvider extends ServiceProvider
      */
     protected function mapApiRoutes()
     {
-        Route::prefix('api')
+        /*Route::prefix('api')
              ->middleware('api')
              ->namespace($this->namespace)
-             ->group(base_path('routes/api.php'));
+             ->group(base_path('routes/api.php'));*/
+        Route::prefix('api')
+            ->middleware('api')
+            ->as('api.')
+            ->namespace($this->namespace."\\API")
+            ->group(base_path('routes/api.php'));
+    }
+
+    protected function mapBackendRoutes()
+    {
+        Route::group([
+            'domain' => env('BACKEND_DOMAIN', 'admin.maimaitree.com'),
+            'middleware' => 'backend',
+            'namespace' => $this->namespace,
+            'prefix' => 'backend',
+        ], function ($router) {
+            require base_path('routes/backend.php');
+        });
     }
 }

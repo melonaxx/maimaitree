@@ -14,3 +14,6 @@
 Route::get('/', function () {
     return view('loading');
 });
+
+
+// Route::resource('tests', 'TestController');
