@@ -21,7 +21,7 @@ Route::get('/',function(){
 Route::group(['prefix' => 'miniapp',], function () {
 
     //消息推送服务器配置接口
-    Route::any('/checkSignature','WeixinAPIController@index');
+    Route::any('/infomation','WeixinAPIController@index');
 
 });
 
