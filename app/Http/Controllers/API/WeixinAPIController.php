@@ -39,7 +39,7 @@ class WeixinAPIController extends AppBaseController
         }else{
             return false;
         }
-        return $this->sendResponse(array(), 'Weixins retrieved successfully');
+
     }
 
 }
