@@ -13,7 +13,5 @@
 
 Route::get('/', function () {
     return view('loading');
+    // var_dump(DB::connection('mysql')->select('select * from tests limit 1'));
 });
-
-
-// Route::resource('tests', 'TestController');

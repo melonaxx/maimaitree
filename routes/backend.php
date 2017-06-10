@@ -1,6 +1,7 @@
 <?php
 
-// Route::resource('tests', 'TestController');
-Route::get('tests', function(){
-    return view('loading');
+Route::get('/',function(){
+    dd('backend.....');
 });
+
+Route::resource('tests', 'TestController');
