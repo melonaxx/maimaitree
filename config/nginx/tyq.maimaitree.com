@@ -1,12 +1,33 @@
 server {
     listen       80;
     server_name  tyq.maimaitree.com;
+    root   /Users/melon/Documents/laravelwww/maimaitree/public;
+    index  index.php index.html index.htm;
 
-    #access_log  /var/log/nginx/log/host.access.log  main;
+    access_log  /data/web_logs/$host.access.log main;
 
     location / {
-        root   /Users/melon/Documents/laravelwww/maimaitree/public;
-        index  index.php index.html index.htm;
+        try_files $uri $uri/ /index.php?$query_string;
+    }
+
+    location ~ ^/(config|src|test|project|vendor|lumen)/ {
+        deny all;
+        break;
+    }
+
+    location ~* (composer.json|composer.lock) {
+        deny all;
+    }
+
+    location /static/ {
+        charset UTF-8;
+        access_log   off;
+        expires      180m;
+    }
+
+    location /favicon.ico {
+        access_log   off;
+        expires      1d;
     }
 
     error_page   500 502 503 504  /50x.html;
@@ -27,14 +48,35 @@ server {
 
 
 server {
-    listen       80;
+    listen       9889;
     server_name  admin.tyq.maimaitree.com;
+    root   /Users/melon/Documents/laravelwww/maimaitree/public;
+    index  index.php index.html index.htm;
 
-    #access_log  /var/log/nginx/log/host.access.log  main;
+    access_log  /data/web_logs/$host.access.log main;
 
     location / {
-        root   /Users/melon/Documents/laravelwww/maimaitree/public;
-        index  index.php index.html index.htm;
+        try_files $uri $uri/ /index.php?$query_string;
+    }
+
+    location ~ ^/(config|src|test|project|vendor|lumen)/ {
+        deny all;
+        break;
+    }
+
+    location ~* (composer.json|composer.lock) {
+        deny all;
+    }
+
+    location /static/ {
+        charset UTF-8;
+        access_log   off;
+        expires      180m;
+    }
+
+    location /favicon.ico {
+        access_log   off;
+        expires      1d;
     }
 
     error_page   500 502 503 504  /50x.html;
