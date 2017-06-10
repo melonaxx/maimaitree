@@ -37,7 +37,7 @@ class WeixinAPIController extends AppBaseController
         $tmpStr = sha1( $tmpStr );
 
         if( $tmpStr == $signature ){
-            echo 'ok';
+            echo $request->input('echostr','');
         }
         exit();
 
