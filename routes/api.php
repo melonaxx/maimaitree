@@ -17,8 +17,14 @@ Route::get('/',function(){
     dd('api.....');
 });
 
-/*小程序消息推送服务器配置接口*/
-Route::any('/miniapp',function(){
-    return json_encode(array('e'=>'9999','m'=>'okk'));
+/*小程序*/
+Route::group(['prefix' => 'miniapp',], function () {
+
+    //消息推送服务器配置接口
+    Route::any('/information',function(){
+        return json_encode(array('e'=>'9999','m'=>'okk'));
+    });
+
 });
+
 
