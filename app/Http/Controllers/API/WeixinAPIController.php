@@ -26,9 +26,9 @@ class WeixinAPIController extends AppBaseController
      */
     public function index(Request $request)
     {
-        $signature = $_GET["signature"];
-        $timestamp = $_GET["timestamp"];
-        $nonce = $_GET["nonce"];
+        $signature = $request->input('signature','');
+        $timestamp = $request->input('timestamp','');
+        $nonce = $request->input('nonce','');
 
         $token = self::TOKEN;
         $tmpArr = array($token, $timestamp, $nonce);
