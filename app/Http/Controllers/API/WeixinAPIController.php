@@ -15,6 +15,8 @@ use Response;
 class WeixinAPIController extends AppBaseController
 {
 
+    const TOKEN = 'yLqTwVhCnZbUBchmM7dKCwzau278GWT9';
+
     /**
      * Display a listing of the Weixin.
      * GET|HEAD /weixins
@@ -28,7 +30,7 @@ class WeixinAPIController extends AppBaseController
         $timestamp = $_GET["timestamp"];
         $nonce = $_GET["nonce"];
 
-        $token = TOKEN;
+        $token = self::TOKEN;
         $tmpArr = array($token, $timestamp, $nonce);
         sort($tmpArr, SORT_STRING);
         $tmpStr = implode( $tmpArr );
