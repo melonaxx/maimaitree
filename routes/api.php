@@ -21,9 +21,7 @@ Route::get('/',function(){
 Route::group(['prefix' => 'miniapp',], function () {
 
     //消息推送服务器配置接口
-    Route::any('/information',function(){
-        return json_encode(array('e'=>'9999','m'=>'okk'));
-    });
+    Route::any('/checkSignature','WeixinAPIController@index');
 
 });
 
