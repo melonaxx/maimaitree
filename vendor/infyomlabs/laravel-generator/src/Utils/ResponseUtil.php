@@ -10,12 +10,12 @@ class ResponseUtil
      *
      * @return array
      */
-    public static function makeResponse($message, $data)
+    public static function makeResponse($message, $data, $code)
     {
         return [
-            'success' => true,
+            'e' => $code,
+            'm' => $message,
             'data'    => $data,
-            'message' => $message,
         ];
     }
 
@@ -25,11 +25,11 @@ class ResponseUtil
      *
      * @return array
      */
-    public static function makeError($message, array $data = [])
+    public static function makeError($message, array $data, $code)
     {
         $res = [
-            'success' => false,
-            'message' => $message,
+            'e' => $code,
+            'm' => $message,
         ];
 
         if (!empty($data)) {

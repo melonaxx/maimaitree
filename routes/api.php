@@ -23,6 +23,11 @@ Route::group(['prefix' => 'miniapp',], function () {
     //消息推送服务器配置接口
     Route::any('/infomation','WeixinAPIController@index');
 
+
+    Route::get('/recordindex','WeixinAPIController@recordindex');//记工簿首页
+
+    Route::get('/recordcreate','WeixinAPIController@recordcreate');//添加记工
+
 });
 
 
