@@ -4,7 +4,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="renderer" content="webkit"/>
     <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,minimal-ui"/>
-    <title>教育培训平台</title>
+    <title>智能信息管理平台</title>
     <style>
         body{background:#d9d9d9 url(https://static.gensee.com/webcast/static/tra/images/education_loginbg.gif) repeat-x top;
             margin:0;
@@ -12,6 +12,7 @@
     </style>
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
     <meta name="renderer" content="webkit"/>
+    <link rel="Shortcut Icon" href="/images/backend/favicon.png" type="image/x-icon">
     <link href="https://static.gensee.com/webcast/static/tra/css/jquery-ui-1.8.17.custom.css" rel="stylesheet" />
     <link href="https://static.gensee.com/webcast/static/tra/css/education.css" rel="stylesheet" />
     <link href="https://static.gensee.com/webcast/branding/default/tra/zh_CN/css/education_login.css" rel="stylesheet"/>
@@ -80,7 +81,7 @@
 <body>
 <div id="education_loginmid">
 
-    <img src="https://static.gensee.com/webcast/static/tra/images/education_loginlogo3.png" border="0" />
+    <img src="/images/backend/login_title.png" border="0" />
 
     <form method="post" action="/training/site/login" id="form1">
         <input type="hidden" name="redirectUrl" value=""/>
