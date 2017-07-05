@@ -24,9 +24,15 @@ Route::group(['prefix' => 'miniapp',], function () {
     Route::any('/infomation','WeixinAPIController@index');
 
 
-    Route::get('/recordindex','WeixinAPIController@recordindex');//记工簿首页
+    Route::get('/recordIndex','WeixinAPIController@recordIndex');//记工簿首页
 
-    Route::get('/recordcreate','WeixinAPIController@recordcreate');//添加记工
+    Route::post('/setDaySalary','WeixinAPIController@setDaySalary');//修改单日工资
+
+    Route::post('/recordCreate','WeixinAPIController@recordCreate');//添加记工
+
+    Route::post('/recordStore','WeixinAPIController@recordStore');//存储记工数据
+
+    Route::get('/recordStatistics','WeixinAPIController@recordStatistics');//记工簿统计数据页
 
 });
 

@@ -48,9 +48,22 @@ class WeixinAPIController extends AppBaseController
      * @param  Request $request
      * @return mixed
      */
-    public function recordindex(Request $request)
+    public function recordIndex(Request $request)
     {
         $date = $request->input('date','');
+        $month_record = array();
+
+        for ($i=1; $i < 18; $i++) {
+
+            $one_record = array(
+                'id' => $i,
+                'title' => $date ? '加班' : '出勤',
+                'remark' => $date ? '我X，又加班！' : '好的一天，不错_1',
+                'day' => $date ? '1小时' : '1天',
+                'salary' => $date ? '80元' : '220元',
+            );
+            array_push($month_record, $one_record);
+        }
 
         $data = array(
             'title' => '6月当前工资',
@@ -59,148 +72,7 @@ class WeixinAPIController extends AppBaseController
             'date' => '2017-06',
             'date_time' => '2017-06-14',
             'work_day' => '23',
-            'month_record' => array(
-                array(
-                    'id' => '1',
-                    'title' => '出勤',
-                    'remark' => '好的一天，不错_1',
-                    'day' => '1天',
-                    'salary' => '220元',
-                ),
-                array(
-                    'id' => '1',
-                    'title' => '出勤',
-                    'remark' => '好的一天，不错_1',
-                    'day' => '1天',
-                    'salary' => '220元',
-                ),
-                array(
-                    'id' => '1',
-                    'title' => '出勤',
-                    'remark' => '好的一天，不错_1',
-                    'day' => '1天',
-                    'salary' => '220元',
-                ),
-                array(
-                    'id' => '1',
-                    'title' => '出勤',
-                    'remark' => '好的一天，不错_1',
-                    'day' => '1天',
-                    'salary' => '220元',
-                ),
-                array(
-                    'id' => '1',
-                    'title' => '出勤',
-                    'remark' => '好的一天，不错_1',
-                    'day' => '1天',
-                    'salary' => '220元',
-                ),
-                array(
-                    'id' => '1',
-                    'title' => '出勤',
-                    'remark' => '好的一天，不错_1',
-                    'day' => '1天',
-                    'salary' => '220元',
-                ),
-                array(
-                    'id' => '1',
-                    'title' => '出勤',
-                    'remark' => '好的一天，不错_1',
-                    'day' => '1天',
-                    'salary' => '220元',
-                ),
-                array(
-                    'id' => '1',
-                    'title' => '出勤',
-                    'remark' => '好的一天，不错_1',
-                    'day' => '1天',
-                    'salary' => '220元',
-                ),
-                array(
-                    'id' => '1',
-                    'title' => '出勤',
-                    'remark' => '好的一天，不错_1',
-                    'day' => '1天',
-                    'salary' => '220元',
-                ),
-                array(
-                    'id' => '1',
-                    'title' => '出勤',
-                    'remark' => '好的一天，不错_1',
-                    'day' => '1天',
-                    'salary' => '220元',
-                ),
-                array(
-                    'id' => '1',
-                    'title' => '出勤',
-                    'remark' => '好的一天，不错_1',
-                    'day' => '1天',
-                    'salary' => '220元',
-                ),
-                array(
-                    'id' => '1',
-                    'title' => '出勤',
-                    'remark' => '好的一天，不错_1',
-                    'day' => '1天',
-                    'salary' => '220元',
-                ),
-                array(
-                    'id' => '1',
-                    'title' => '出勤',
-                    'remark' => '好的一天，不错_1',
-                    'day' => '1天',
-                    'salary' => '220元',
-                ),
-                array(
-                    'id' => '1',
-                    'title' => '出勤',
-                    'remark' => '好的一天，不错_1',
-                    'day' => '1天',
-                    'salary' => '220元',
-                ),
-                array(
-                    'id' => '1',
-                    'title' => '出勤',
-                    'remark' => '好的一天，不错_1',
-                    'day' => '1天',
-                    'salary' => '220元',
-                ),
-                array(
-                    'id' => '1',
-                    'title' => '出勤',
-                    'remark' => '好的一天，不错_1',
-                    'day' => '1天',
-                    'salary' => '220元',
-                ),
-                array(
-                    'id' => '1',
-                    'title' => '出勤',
-                    'remark' => '好的一天，不错_1',
-                    'day' => '1天',
-                    'salary' => '220元',
-                ),
-                array(
-                    'id' => '1',
-                    'title' => '出勤',
-                    'remark' => '好的一天，不错_1',
-                    'day' => '1天',
-                    'salary' => '220元',
-                ),
-                array(
-                    'id' => '1',
-                    'title' => '出勤',
-                    'remark' => '好的一天，不错_1',
-                    'day' => '1天',
-                    'salary' => '220元',
-                ),
-                array(
-                    'id' => '1',
-                    'title' => '出勤',
-                    'remark' => '好的一天，不错_1',
-                    'day' => '1天',
-                    'salary' => '220元',
-                ),
-            ),
+            'month_record' => $month_record,
         );
 
         return $this->sendResponse($data);
@@ -208,11 +80,25 @@ class WeixinAPIController extends AppBaseController
     }
 
     /**
+     * 修改单日工资
+     * @param Request $request
+     */
+    public function setDaySalary(Request $request)
+    {
+        $day_salary = $request->input('day_salary','');
+
+        //这里修改用户单日工资操作 待完善...
+
+        $res = array('e'=>'9999','m'=>'修改成功！');
+        return $this->sendResponse($res);
+    }
+
+    /**
      * show添加记工页
      * @param  Request $request
      * @return mixed
      */
-    public function recordcreate(Request $request)
+    public function recordCreate(Request $request)
     {
         $record_id = $request->input('id','');
 
@@ -244,15 +130,58 @@ class WeixinAPIController extends AppBaseController
                     'image' => '',
                 ),
             ),
-            'id' => '',
+            'id' => $record_id,
             'date_time' => '2017-06-14',
-            'type' => '1',
+            'type' => '2',
             'salary' => '220',
-            'remark' => '',
+            'remark' => '我是测试数据！',
         );
 
         return $this->sendResponse($data);
 
+    }
+
+    /**
+     * 存储记工数据
+     * @param  Request $request
+     * @return mixed
+     */
+    public function recordStore(Request $request)
+    {
+        $data = $request->all();
+
+        $res = is_array($data) ? array('e'=>'9999','m'=>'添加成功！') : array('e'=>'404','m'=>'添加失败！');
+        return $this->sendResponse($res);
+    }
+
+  /**
+   * 记工簿统计数据页
+   * @param  Request $request
+   * @return mixed
+   */
+    public function recordStatistics(Request $request)
+    {
+
+        $series_data = array(
+            array('name'=>'出勤','data'=>'23'),
+            array('name'=>'加班','data'=>'3'),
+            array('name'=>'请假','data'=>'1'),
+            array('name'=>'调休','data'=>'2'),
+            array('name'=>'旷工','data'=>'0')
+        );
+        $progress_data = array(
+            array('name'=>'出勤','percent'=>'60','color'=>'red'),
+            array('name'=>'加班','percent'=>'10','color'=>'green'),
+            array('name'=>'请假','percent'=>'5','color'=>'blue'),
+            array('name'=>'调休','percent'=>'2','color'=>'pink'),
+            array('name'=>'旷工','percent'=>'0','color'=>'yellow')
+        );
+        $data = array(
+            'series'=>$series_data,
+            'progress'=>$progress_data,
+        );
+
+        return $this->sendResponse($data);
     }
 
 }
