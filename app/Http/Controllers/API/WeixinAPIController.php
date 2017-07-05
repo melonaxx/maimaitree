@@ -163,18 +163,18 @@ class WeixinAPIController extends AppBaseController
     {
 
         $series_data = array(
-            array('name'=>'出勤','data'=>'23'),
-            array('name'=>'加班','data'=>'3'),
-            array('name'=>'请假','data'=>'1'),
-            array('name'=>'调休','data'=>'2'),
-            array('name'=>'旷工','data'=>'0')
+            array('name'=>'出勤','data'=>'23','color'=>'#87CECB'),
+            array('name'=>'加班','data'=>'3','color'=>'#90EE90'),
+            array('name'=>'请假','data'=>'1','color'=>'#FFD700'),
+            array('name'=>'调休','data'=>'2','color'=>'#D2B48C'),
+            array('name'=>'旷工','data'=>'0','color'=>'#FA8072'),
         );
         $progress_data = array(
-            array('name'=>'出勤','percent'=>'60','color'=>'red'),
-            array('name'=>'加班','percent'=>'10','color'=>'green'),
-            array('name'=>'请假','percent'=>'5','color'=>'blue'),
-            array('name'=>'调休','percent'=>'2','color'=>'pink'),
-            array('name'=>'旷工','percent'=>'0','color'=>'yellow')
+            array('name'=>'出勤','day'=>'23','percent'=>'60','color'=>'#87CECB'),
+            array('name'=>'加班','day'=>'3','percent'=>'10','color'=>'#90EE90'),
+            array('name'=>'请假','day'=>'2','percent'=>'5','color'=>'#FFD700'),
+            array('name'=>'调休','day'=>'1','percent'=>'2','color'=>'#D2B48C'),
+            array('name'=>'旷工','day'=>'0','percent'=>'0','color'=>'#FA8072')
         );
         $data = array(
             'series'=>$series_data,
