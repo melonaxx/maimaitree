@@ -161,6 +161,7 @@ class WeixinAPIController extends AppBaseController
    */
     public function recordStatistics(Request $request)
     {
+        $date = $request->input('date','');
 
         $series_data = array(
             array('name'=>'出勤','data'=>'23','color'=>'#87CECB'),
@@ -176,7 +177,20 @@ class WeixinAPIController extends AppBaseController
             array('name'=>'调休','day'=>'1','percent'=>'2','color'=>'#D2B48C'),
             array('name'=>'旷工','day'=>'0','percent'=>'0','color'=>'#FA8072')
         );
+        $date_data = array(
+            'date_time'=>date('Y-m'),
+            'month'=>(int)date('m'),
+        );
+
+        if ($date) {
+            $date_data = array(
+                'date_time'=>date('Y-m',strtotime($date)),
+                'month'=>(int)date('m',strtotime($date)),
+            );
+        }
+
         $data = array(
+            'date'=>$date_data,
             'series'=>$series_data,
             'progress'=>$progress_data,
         );
