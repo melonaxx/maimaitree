@@ -58,7 +58,8 @@ class WeixinAPIController extends AppBaseController
         for ($i=1; $i < 18; $i++) {
 
             $one_record = array(
-                'id' => $i,
+                'id' => (string)$i,
+                'current' => (string)$i,
                 'title' => $date ? '加班' : '出勤',
                 'remark' => $date ? '我X，又加班！' : '好的一天，不错_1',
                 'day' => $date ? '1小时' : '1天',
