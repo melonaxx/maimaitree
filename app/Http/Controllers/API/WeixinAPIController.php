@@ -52,7 +52,7 @@ class WeixinAPIController extends AppBaseController
     public function recordIndex(Request $request)
     {
         $date = $request->input('date','');
-        $date = Utils::checkDateIsValid($date) ? $date : '';
+        $date = Utils::checkDateIsValid($date) ? $date : date('Y-m');
         $month_record = array();
 
         for ($i=1; $i < 18; $i++) {
@@ -69,11 +69,11 @@ class WeixinAPIController extends AppBaseController
         }
 
         $data = array(
-            'title' => date('m',strtotime($date)).'月当前工资',
+            'title' => (int)date('m',strtotime($date)).'月当前工资',
             'curr_salary' => '4882.94',
             'day_salary' => '单日工资220元',
-            'date' => $date ? $date : date('Y-m'),
-            'date_time' => $date ? $date : date('Y-m'),
+            'date' => $date,
+            'date_time' => $date,
             'work_day' => '23',
             'month_record' => $month_record,
         );
