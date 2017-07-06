@@ -92,7 +92,7 @@ class WeixinAPIController extends AppBaseController
 
         //这里修改用户单日工资操作 待完善...
 
-        $res = array('e'=>'9999','m'=>'修改成功！');
+        $res = array('daySalary'=>$day_salary);
         return $this->sendResponse($res);
     }
 
