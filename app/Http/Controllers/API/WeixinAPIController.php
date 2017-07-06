@@ -137,7 +137,7 @@ class WeixinAPIController extends AppBaseController
             'date_time' => '2017-06-14',
             'type' => '2',
             'salary' => '220',
-            'remark' => '我是测试数据！',
+            'remark' => '加班好辛苦哦！',
             'inctype' => array('1','2'),
             'dectype' => array('3','4','5'),
         );
