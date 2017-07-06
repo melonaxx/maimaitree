@@ -138,6 +138,8 @@ class WeixinAPIController extends AppBaseController
             'type' => '2',
             'salary' => '220',
             'remark' => '我是测试数据！',
+            'inctype' => array('1','2'),
+            'dectype' => array('3','4','5'),
         );
 
         return $this->sendResponse($data);
