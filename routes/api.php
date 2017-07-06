@@ -28,7 +28,7 @@ Route::group(['prefix' => 'miniapp',], function () {
 
     Route::post('/setDaySalary','WeixinAPIController@setDaySalary');//修改单日工资
 
-    Route::post('/recordCreate','WeixinAPIController@recordCreate');//添加记工
+    Route::get('/recordCreate','WeixinAPIController@recordCreate');//添加记工
 
     Route::post('/recordStore','WeixinAPIController@recordStore');//存储记工数据
 
