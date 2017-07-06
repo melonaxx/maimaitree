@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\AppBaseController;
 use InfyOm\Generator\Criteria\LimitOffsetCriteria;
 use Response;
+use App\Extend\Utils;
 
 /**
  * Class WeixinController
@@ -51,6 +52,7 @@ class WeixinAPIController extends AppBaseController
     public function recordIndex(Request $request)
     {
         $date = $request->input('date','');
+        $date = Utils::checkDateIsValid($date) ? true : false;
         $month_record = array();
 
         for ($i=1; $i < 18; $i++) {
@@ -182,7 +184,7 @@ class WeixinAPIController extends AppBaseController
             'month'=>(int)date('m'),
         );
 
-        if ($date) {
+        if ($date && Utils::checkDateIsValid($date)) {
             $date_data = array(
                 'date_time'=>date('Y-m',strtotime($date)),
                 'month'=>(int)date('m',strtotime($date)),
