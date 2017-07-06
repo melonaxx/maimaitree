@@ -110,27 +110,27 @@ class WeixinAPIController extends AppBaseController
                 array(
                     'id' => '1',
                     'title' => '出勤',
-                    'image' => '',
+                    'image' => '/public/images/work.png',
                 ),
                 array(
                     'id' => '2',
                     'title' => '加班',
-                    'image' => '',
+                    'image' => '/public/images/overtime.png',
                 ),
                 array(
                     'id' => '3',
                     'title' => '请假',
-                    'image' => '',
+                    'image' => '/public/images/leave.png',
                 ),
                 array(
                     'id' => '4',
                     'title' => '调休',
-                    'image' => '',
+                    'image' => '/public/images/rest.png',
                 ),
                 array(
                     'id' => '5',
                     'title' => '旷工',
-                    'image' => '',
+                    'image' => '/public/images/absenteeism.png',
                 ),
             ),
             'id' => $record_id,
