@@ -60,7 +60,7 @@ class WeixinAPIController extends AppBaseController
 
         $data        = json_decode($open_res,true);
 
-        /*if (is_array($data)) {
+        if (is_array($data) && !isset($data['errcode'])) {
             $open_id     = $data['openid'];
             $session_key = $data['session_key'];
             $token  = self::TOKEN;
@@ -71,10 +71,9 @@ class WeixinAPIController extends AppBaseController
             $wx_data = array('rd3_session'=>$rd3_key,'aa'=>$data);
         } else {
             $wx_data = array();
-        }*/
+        }
 
-        // return $this->sendResponse($wx_data);
-        return $this->sendResponse(array('aaaa'=>$data));
+        return $this->sendResponse($wx_data);
 
     }
 
