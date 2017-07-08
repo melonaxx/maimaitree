@@ -53,7 +53,7 @@ class RouteServiceProvider extends ServiceProvider
     protected function mapWebRoutes()
     {
         Route::middleware('web')
-            ->namespace($this->namespace."\\WEB")
+            ->namespace($this->namespace."\\Web")
             ->group(base_path('routes/web.php'));
 
     }
@@ -69,7 +69,7 @@ class RouteServiceProvider extends ServiceProvider
     {
         Route::prefix('api')
             ->middleware('api')
-            ->namespace($this->namespace."\\API")
+            ->namespace($this->namespace."\\Api")
             ->group(base_path('routes/api.php'));
     }
 
@@ -78,13 +78,13 @@ class RouteServiceProvider extends ServiceProvider
         Route::middleware('backend')
             ->prefix('backend')
             ->domain(env('BACKEND_DOMAIN', 'admin.maimaitree.com'))
-            ->namespace($this->namespace."\\BACKEND")
+            ->namespace($this->namespace."\\Backend")
             ->group(base_path('routes/backend.php'));
 
         /*Route::group([
             'domain' => env('BACKEND_DOMAIN', 'admin.maimaitree.com'),
             'middleware' => 'backend',
-            'namespace' => $this->namespace."\\BACKEND",
+            'namespace' => $this->namespace."\\Backend",
         ], function ($router) {
             require base_path('routes/backend.php');
         });*/
