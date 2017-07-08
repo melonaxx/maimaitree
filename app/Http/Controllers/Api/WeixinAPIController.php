@@ -54,7 +54,6 @@ class WeixinAPIController extends AppBaseController
     public function wxAppRecordLogin(Request $request)
     {
         $code = $request->input('code','');
-        $code = '013nFLsy00J5Si128Rsy0wRRsy0nFLs6';
         $get_open_id_url = 'https://api.weixin.qq.com/sns/jscode2session?appid='.self::WX_APPID.'&secret='.self::WX_SECRET.'&js_code='.$code.'&grant_type=authorization_code';
         $open_res = Utils::simpleRequest($get_open_id_url);
 
