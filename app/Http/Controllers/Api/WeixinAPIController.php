@@ -124,6 +124,7 @@ class WeixinAPIController extends AppBaseController
             'work_day' => '23',
             'openid' => $wx_oppen_id,
             'rd3_session' => $rd3_session,
+            'session' => $_SESSION,
             'month_record' => $month_record,
         );
 
