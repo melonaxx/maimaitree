@@ -9,7 +9,7 @@ return array(
     'App\\Console\\Kernel' => $baseDir . '/app/Console/Kernel.php',
     'App\\Exceptions\\Handler' => $baseDir . '/app/Exceptions/Handler.php',
     'App\\Extend\\Utils' => $baseDir . '/app/Extend/Utils.php',
-    'App\\Http\\Controllers\\API\\WeixinAPIController' => $baseDir . '/app/Http/Controllers/Api/WeixinAPIController.php',
+    'App\\Http\\Controllers\\Api\\WeixinAPIController' => $baseDir . '/app/Http/Controllers/Api/WeixinAPIController.php',
     'App\\Http\\Controllers\\AppBaseController' => $baseDir . '/app/Http/Controllers/AppBaseController.php',
     'App\\Http\\Controllers\\Auth\\ForgotPasswordController' => $baseDir . '/app/Http/Controllers/Auth/ForgotPasswordController.php',
     'App\\Http\\Controllers\\Auth\\LoginController' => $baseDir . '/app/Http/Controllers/Auth/LoginController.php',
