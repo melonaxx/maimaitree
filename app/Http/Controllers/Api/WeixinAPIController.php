@@ -85,8 +85,21 @@ class WeixinAPIController extends AppBaseController
     public function recordIndex(Request $request)
     {
         $date = $request->input('date','');
+        $rd3_session = $request->input('rd3_session','');
         $date = Utils::checkDateIsValid($date) ? $date : date('Y-m');
         $month_record = array();
+        $wx_oppen_id = '';
+
+        //获取user openid
+        if (isset($_SESSION[$rd3_session]) && $_SESSION[$rd3_session] != '') {
+            $rd3_str = explode(';', $_SESSION[$rd3_session]);
+
+            if (count($rd3_str) >= 3) {
+                $wx_oppen_id = $rd3_str[0];
+            }
+
+        }
+
 
         for ($i=1; $i < 18; $i++) {
 
@@ -108,6 +121,7 @@ class WeixinAPIController extends AppBaseController
             'date' => $date,
             'date_time' => $date,
             'work_day' => '23',
+            'openid' => $wx_oppen_id,
             'month_record' => $month_record,
         );
 
