@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\API;
+session_start();
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\AppBaseController;
@@ -57,8 +58,22 @@ class WeixinAPIController extends AppBaseController
         $get_open_id_url = 'https://api.weixin.qq.com/sns/jscode2session?appid='.self::WX_APPID.'&secret='.self::WX_SECRET.'&js_code='.$code.'&grant_type=authorization_code';
         $open_res = Utils::simpleRequest($get_open_id_url);
 
-        $data = json_decode($open_res,true);
-        return $this->sendResponse($data);
+        $data        = json_decode($open_res,true);
+
+        if (count($data) >= 3) {
+            $open_id     = $data['openid'];
+            $session_key = $data['session_key'];
+            $expires_in  = $data['expires_in'];
+
+            $rd3_session        = $open_id.';'.$session_key.';'.$expires_in;
+            $rd3_key            = md5($rd3_session);
+            $_SESSION[$rd3_key] = $rd3_session;
+            $wx_data = array('rd3_session'=>$rd3_key);
+        } else {
+            $wx_data = array();
+        }
+
+        return $this->sendResponse($wx_data);
 
     }
 
