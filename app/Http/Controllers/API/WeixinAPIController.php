@@ -61,7 +61,7 @@ class WeixinAPIController extends AppBaseController
                 'id' => (string)$i,
                 'current' => (string)$i,
                 'title' => $date ? '加班' : '出勤',
-                'remark' => $date ? '我X，又加班！' : '好的一天，不错_1',
+                'remark' => $date ? '嗯，又加班！' : '好的一天，不错',
                 'day' => $date ? '1小时' : '1天',
                 'salary' => $date ? '80元' : '220元',
             );
