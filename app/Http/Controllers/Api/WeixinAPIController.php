@@ -96,12 +96,11 @@ class WeixinAPIController extends AppBaseController
         if ($rd3_session != '' && $_SESSION[$rd3_session] != '') {
             $rd3_str = explode(';', $_SESSION[$rd3_session]);
 
-            // if (count($rd3_str) >= 3) {
+            if (count($rd3_str) >= 3) {
                 $wx_oppen_id = $rd3_str[0];
-            // }
+            }
 
         }
-
 
         for ($i=1; $i < 18; $i++) {
 
