@@ -63,12 +63,12 @@ class WeixinAPIController extends AppBaseController
         if (is_array($data)) {
             $open_id     = $data['openid'];
             $session_key = $data['session_key'];
-            $expires_in  = isset($data['expires_in']) ? $data['expires_in'] : '';
+            $token  = self::TOKEN;
 
             $rd3_session        = $open_id.';'.$session_key.';'.$expires_in;
             $rd3_key            = md5($rd3_session);
             $_SESSION[$rd3_key] = $rd3_session;
-            $wx_data = array('rd3_session'=>$rd3_key);
+            $wx_data = array('rd3_session'=>$rd3_key,'aa'=>$data);
         } else {
             $wx_data = array();
         }
