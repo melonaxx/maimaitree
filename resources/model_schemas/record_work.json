@@ -11,8 +11,8 @@
         "inIndex": false
     },
     {
-        "name": "book_id",
-        "dbType": "integer:unsigned:default,0",
+        "name": "uid",
+        "dbType": "integer:unsigned",
         "htmlType": "text",
         "validations": "",
         "searchable": true,
@@ -22,81 +22,70 @@
         "inIndex": true
     },
     {
-        "name": "unit_id",
-        "dbType": "integer:unsigned:default,0",
-        "htmlType": "text",
-        "validations": "",
-        "searchable": true,
-        "fillable": true,
-        "primary": false,
-        "inForm": true,
-        "inIndex": true
-    },
-    {
-        "name": "level",
-        "dbType": "tinyInteger:unsigned:default,0",
-        "htmlType": "text",
-        "validations": "",
-        "searchable": true,
-        "fillable": true,
-        "primary": false,
-        "inForm": true,
-        "inIndex": true
-    },
-    {
-        "name": "title",
-        "dbType": "string,64:default,''",
-        "htmlType": "text",
-        "validations": "",
-        "searchable": true,
-        "fillable": true,
-        "primary": false,
-        "inForm": true,
-        "inIndex": true
-    },
-    {
-        "name": "describe",
-        "dbType": "string:default,''",
-        "htmlType": "text",
-        "validations": "",
-        "searchable": false,
-        "fillable": true,
-        "primary": false,
-        "inForm": true,
-        "inIndex": false
-    },
-    {
-        "name": "cover",
-        "dbType": "string:default,''",
-        "htmlType": "text",
-        "validations": "",
-        "searchable": false,
-        "fillable": true,
-        "primary": false,
-        "inForm": true,
-        "inIndex": true
-    },
-    {
-        "name": "sort",
-        "dbType": "integer:unsigned:default,1",
-        "htmlType": "text",
-        "validations": "",
-        "searchable": true,
-        "fillable": true,
-        "primary": false,
-        "inForm": true,
-        "inIndex": true
-    },
-    {
-        "name": "status",
+        "name": "type",
         "dbType": "tinyInteger:unsigned:default,1",
         "htmlType": "text",
         "validations": "",
+        "searchable": true,
+        "fillable": true,
+        "primary": false,
+        "inForm": true,
+        "inIndex": true
+    },
+    {
+        "name": "classify",
+        "dbType": "tinyInteger:unsigned:default,101",
+        "htmlType": "text",
+        "validations": "",
+        "searchable": true,
+        "fillable": true,
+        "primary": false,
+        "inForm": true,
+        "inIndex": true
+    },
+    {
+        "name": "salary",
+        "dbType": "integer:default,0",
+        "htmlType": "text",
+        "validations": "",
+        "searchable": true,
+        "fillable": true,
+        "primary": false,
+        "inForm": true,
+        "inIndex": true
+    },
+    {
+        "name": "remark",
+        "dbType": "string:default,''",
+        "htmlType": "text",
+        "validations": "",
         "searchable": false,
         "fillable": true,
         "primary": false,
         "inForm": true,
         "inIndex": false
+    },
+    {
+        "name": "date",
+        "dbType": "timestamp:nullable",
+        "htmlType": "text",
+        "validations": "",
+        "searchable": false,
+        "fillable": true,
+        "primary": false,
+        "inForm": true,
+        "inIndex": true
+    },
+    {
+        "name": "work_time",
+        "dbType": "string:default,''",
+        "htmlType": "text",
+        "validations": "",
+        "searchable": true,
+        "fillable": true,
+        "primary": false,
+        "inForm": true,
+        "inIndex": true
     },
     {
         "name": "created_at",
