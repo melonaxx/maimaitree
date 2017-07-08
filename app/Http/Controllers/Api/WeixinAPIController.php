@@ -86,19 +86,21 @@ class WeixinAPIController extends AppBaseController
     {
         $date = $request->input('date','');
         $rd3_session = $request->input('rd3_session','');
+        //069ac321a85d4c3d78be6eb1aa75820a
+        //4f1302b293b8fbd6c5ee316b9a4a79e1
         $date = Utils::checkDateIsValid($date) ? $date : date('Y-m');
         $month_record = array();
         $wx_oppen_id = '';
 
         //获取user openid
-        if (isset($_SESSION[$rd3_session]) && $_SESSION[$rd3_session] != '') {
+        // if (isset($_SESSION[$rd3_session]) && $_SESSION[$rd3_session] != '') {
             $rd3_str = explode(';', $_SESSION[$rd3_session]);
 
-            if (count($rd3_str) >= 3) {
+            // if (count($rd3_str) >= 3) {
                 $wx_oppen_id = $rd3_str[0];
-            }
+            // }
 
-        }
+        // }
 
 
         for ($i=1; $i < 18; $i++) {
