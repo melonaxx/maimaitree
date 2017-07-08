@@ -84,6 +84,7 @@ class WeixinAPIController extends AppBaseController
      */
     public function recordIndex(Request $request)
     {
+        return $this->sendResponse($request->all());
         $date = $request->input('date','');
         $rd3_session = $request->input('rd3_session','');
         //069ac321a85d4c3d78be6eb1aa75820a
