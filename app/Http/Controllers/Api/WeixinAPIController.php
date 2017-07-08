@@ -67,8 +67,9 @@ class WeixinAPIController extends AppBaseController
 
             $rd3_session        = $open_id.';'.$session_key.';'.$token;
             $rd3_key            = md5($rd3_session);
+            $_SESSION['test'] = 'okkkk';
             $_SESSION[$rd3_key] = $rd3_session;
-            $wx_data = array('rd3_session'=>$rd3_key);
+            $wx_data = array('rd3_session'=>$rd3_key,'session'=>$_SESSION);
         } else {
             $wx_data = array();
         }
