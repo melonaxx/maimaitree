@@ -18,6 +18,8 @@ class WeixinAPIController extends AppBaseController
 {
 
     const TOKEN = 'yLqTwVhCnZbUBchmM7dKCwzau278GWT9';
+    const WX_APPID = 'wx6dc1d972e14ac50a';
+    const WX_SECRET = 'e3845ad66fb5ada5186220e0b236c1c9';
 
     /**
      * Display a listing of the Weixin.
@@ -42,6 +44,21 @@ class WeixinAPIController extends AppBaseController
             echo $request->input('echostr','');
         }
         exit();
+
+    }
+    /**
+     * weixin login()
+     * @param Request $request
+     * @return Response
+     */
+    public function wxAppRecordLogin(Request $request)
+    {
+        $code = $request->input('code','');
+        $get_open_id_url = 'api.weixin.qq.com/sns/jscode2session?appid='.self::WX_APPID.'&secret='.self::WX_SECRET.'&js_code='.$code.'&grant_type=authorization_code';
+        $open_res = Utils::call($get_open_id_url);
+
+        $data = json_decode($open_res,true);
+        return $this->sendResponse($data);
 
     }
 

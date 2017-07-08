@@ -23,6 +23,8 @@ Route::group(['prefix' => 'miniapp',], function () {
     //消息推送服务器配置接口
     Route::any('/infomation','WeixinAPIController@index');
 
+    Route::any('/wxAppRecordLogin','WeixinAPIController@wxAppRecordLogin');//记工簿小程序登录
+
 
     Route::get('/recordIndex','WeixinAPIController@recordIndex');//记工簿首页
 

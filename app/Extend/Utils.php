@@ -667,4 +667,95 @@ class Utils
         return false;
     }
 
+
+    public static function call($url, $time_out = 30){
+
+        if ('' == $url) {
+            return false;
+        }
+
+        $url_ary = parse_url($url);
+        if (!isset($url_ary['host'])) {
+            return false;
+        }
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
+        curl_setopt($ch, CURLOPT_NOPROGRESS, 1);
+        curl_setopt($ch, CURLOPT_NOBODY, 0);
+        curl_setopt($ch, CURLOPT_HTTPGET, 1);
+        curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1)');
+
+        $http_header   = array();
+        $http_header[] = 'Connection: close';
+        $http_header[] = 'Pragma: no-cache';
+        $http_header[] = 'Cache-Control: no-cache';
+        $http_header[] = 'Accept: */*';
+        $http_header[] = 'Host: ' . $url_ary['host'];
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $http_header);
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_TIMEOUT, $time_out);
+
+        $result = curl_exec($ch);
+        curl_close($ch);
+        return $result;
+    }
+
+    public static function simpleRequest($url, $post_data = array(), $option = array()){
+
+        //使用http_build_query拼接post
+        if ('' == $url) {
+            return false;
+        }
+        $url_ary = parse_url($url);
+        if (!isset($url_ary['host'])) {
+            return false;
+        }
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+
+        curl_setopt($ch, CURLOPT_HEADER, ($option['CURLOPT_HEADER'] === true));
+        if ($option['referer'] != '') {
+            curl_setopt($ch, CURLOPT_REFERER, $option['referer']);
+        }
+        if (!empty($post_data)) {
+            curl_setopt($ch, CURLOPT_POST, true);
+            if (is_array($post_data)) {
+                curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($post_data));
+            } else {
+                curl_setopt($ch, CURLOPT_POSTFIELDS, $post_data);
+            }
+        }
+        curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (compatible; MSIE 5.01; Windows NT 5.0)');
+
+        $http_header   = array();
+        $http_header[] = 'Connection: close';
+        $http_header[] = 'Pragma: no-cache';
+        $http_header[] = 'Cache-Control: no-cache';
+        $http_header[] = 'Accept: */*';
+        if (isset($option['header'])) {
+            foreach ($option['header'] as $header) {
+                $http_header[] = $header;
+            }
+        }
+
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $http_header);
+
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        if (!isset($option['timeout'])) {
+            $option['timeout'] = 15;
+        }
+
+        curl_setopt($ch, CURLOPT_TIMEOUT, $option['timeout']);
+        $result = curl_exec($ch);
+        curl_close($ch);
+        return $result;
+    }
+
 }
