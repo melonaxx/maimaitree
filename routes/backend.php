@@ -1,11 +1,11 @@
 <?php
 
 Route::get('/',function(){
-    return view('/Backend/backend');
+    return view('/backend/backend');
 });
 
 Route::get('login', function(){
-    return view('/Backend/login');
+    return view('/backend/login');
 });
 
 Route::resource('tests', 'TestController');
