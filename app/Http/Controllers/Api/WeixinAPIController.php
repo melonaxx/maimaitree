@@ -68,7 +68,7 @@ class WeixinAPIController extends AppBaseController
             $rd3_session        = $open_id.';'.$session_key.';'.$token;
             $rd3_key            = md5($rd3_session);
             $_SESSION[$rd3_key] = $rd3_session;
-            $wx_data = array('rd3_session'=>$rd3_key,'aa'=>$data);
+            $wx_data = array('rd3_session'=>$rd3_key);
         } else {
             $wx_data = array();
         }
@@ -93,14 +93,14 @@ class WeixinAPIController extends AppBaseController
         $wx_oppen_id = '';
 
         //获取user openid
-        /*if ($rd3_session != '' && $_SESSION[$rd3_session] != '') {
+        if ($rd3_session != '' && $_SESSION[$rd3_session] != '') {
             $rd3_str = explode(';', $_SESSION[$rd3_session]);
 
             if (count($rd3_str) >= 3) {
                 $wx_oppen_id = $rd3_str[0];
             }
 
-        }*/
+        }
 
         for ($i=1; $i < 18; $i++) {
 
