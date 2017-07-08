@@ -32,7 +32,7 @@ class RecordWorkController extends AppBaseController
         $this->recordWorkRepository->pushCriteria(new RequestCriteria($request));
         $recordWorks = $this->recordWorkRepository->all();
 
-        return view('backend.record_works.index')
+        return view('Backend.record_works.index')
             ->with('recordWorks', $recordWorks);
     }
 
@@ -43,7 +43,7 @@ class RecordWorkController extends AppBaseController
      */
     public function create()
     {
-        return view('backend.record_works.create');
+        return view('Backend.record_works.create');
     }
 
     /**
@@ -81,7 +81,7 @@ class RecordWorkController extends AppBaseController
             return redirect(route('recordWorks.index'));
         }
 
-        return view('backend.record_works.show')->with('recordWork', $recordWork);
+        return view('Backend.record_works.show')->with('recordWork', $recordWork);
     }
 
     /**
@@ -101,7 +101,7 @@ class RecordWorkController extends AppBaseController
             return redirect(route('recordWorks.index'));
         }
 
-        return view('backend.record_works.edit')->with('recordWork', $recordWork);
+        return view('Backend.record_works.edit')->with('recordWork', $recordWork);
     }
 
     /**
