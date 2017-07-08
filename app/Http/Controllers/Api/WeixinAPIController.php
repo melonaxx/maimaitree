@@ -60,10 +60,10 @@ class WeixinAPIController extends AppBaseController
 
         $data        = json_decode($open_res,true);
 
-        if (count($data) >= 3) {
+        if (is_array($data)) {
             $open_id     = $data['openid'];
             $session_key = $data['session_key'];
-            $expires_in  = $data['expires_in'];
+            $expires_in  = isset($data['expires_in']) ? $data['expires_in'] : '';
 
             $rd3_session        = $open_id.';'.$session_key.';'.$expires_in;
             $rd3_key            = md5($rd3_session);
