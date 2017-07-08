@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\BACKEND;
+namespace App\Http\Controllers\Backend;
 
 use App\Http\Requests\CreateTestRequest;
 use App\Http\Requests\UpdateTestRequest;

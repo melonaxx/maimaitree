@@ -7,6 +7,7 @@ use App\Http\Controllers\AppBaseController;
 use InfyOm\Generator\Criteria\LimitOffsetCriteria;
 use Response;
 use App\Extend\Utils;
+use App\Models\Backend\RecordWork;
 
 /**
  * Class WeixinController

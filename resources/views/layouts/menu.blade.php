@@ -28,3 +28,7 @@
         <span>Important</span>
     </a>
 </li>
+<li class="{{ Request::is('recordWorks*') ? 'active' : '' }}">
+    <a href="{!! route('recordWorks.index') !!}"><i class="fa fa-edit"></i><span>RecordWorks</span></a>
+</li>
+

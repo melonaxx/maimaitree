@@ -12,6 +12,6 @@
 */
 
 Route::get('/', function () {
-    return view('/WEB/loading');
+    return view('/Web/loading');
     // var_dump(DB::connection('mysql')->select('select * from tests limit 1'));
 });
