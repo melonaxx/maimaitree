@@ -719,8 +719,8 @@ class Utils
         curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
         curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
 
-        curl_setopt($ch, CURLOPT_HEADER, ($option['CURLOPT_HEADER'] === true));
-        if ($option['referer'] != '') {
+        curl_setopt($ch, CURLOPT_HEADER, ($option && $option['CURLOPT_HEADER'] === true));
+        if ($option && $option['referer'] != '') {
             curl_setopt($ch, CURLOPT_REFERER, $option['referer']);
         }
         if (!empty($post_data)) {
