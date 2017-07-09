@@ -32,3 +32,7 @@
     <a href="{!! route('recordWorks.index') !!}"><i class="fa fa-edit"></i><span>RecordWorks</span></a>
 </li>
 
+<li class="{{ Request::is('recordUsers*') ? 'active' : '' }}">
+    <a href="{!! route('recordUsers.index') !!}"><i class="fa fa-edit"></i><span>RecordUsers</span></a>
+</li>
+

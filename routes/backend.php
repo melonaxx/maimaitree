@@ -10,3 +10,4 @@ Route::get('login', function(){
 
 Route::resource('tests', 'TestController');
 Route::resource('recordWorks', 'RecordWorkController');
+Route::resource('recordUsers', 'RecordUserController');
