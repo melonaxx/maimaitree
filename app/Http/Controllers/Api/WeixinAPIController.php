@@ -69,7 +69,7 @@ class WeixinAPIController extends AppBaseController
             $rd3_session        = $open_id.';'.$session_key.';'.$token;
             $rd3_key            = md5($rd3_session);
             Redis::command('set', [$rd3_key, $rd3_session]);
-            $wx_data = array('rd3_session'=>$rd3_key,'session'=>Redis::command('get', [$rd3_key]));
+            $wx_data = array('rd3_session'=>$rd3_key);
         } else {
             $wx_data = array();
         }
@@ -86,14 +86,12 @@ class WeixinAPIController extends AppBaseController
     public function recordIndex(Request $request)
     {
         $date = $request->input('date','');
-        $rd3_session = $request->input('rd3_session','');
-        //069ac321a85d4c3d78be6eb1aa75820a
-        //4f1302b293b8fbd6c5ee316b9a4a79e1
+        $rd3_key = $request->input('rd3_session','');
         $date = Utils::checkDateIsValid($date) ? $date : date('Y-m');
         $month_record = array();
-        $wx_oppen_id = 'no';
+        $wx_oppen_id = '';
 
-        $rd3_session = Redis::command('get', [$rd3_session]);
+        $rd3_session = Redis::command('get', [$rd3_key]);
 
         //获取user openid
         if ($rd3_session && $rd3_session != '') {
