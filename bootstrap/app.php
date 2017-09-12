@@ -15,24 +15,9 @@ $app = new Illuminate\Foundation\Application(
     realpath(__DIR__.'/../')
 );
 
-$app->useEnvironmentPath($app->basePath().'/config');
-$envContent = 'online';
+$app->useEnvironmentPath($app->basePath() . '/config/env');
+$app->useStoragePath('/data/www/storage/maimaitree.com');
 
-if(file_exists($app->basePath().'/config/env/.env')){
-    $envContent = file_get_contents($app->basePath().'/config/env/.env');
-    $envContent = trim($envContent);
-}
-
-if(@$_SERVER['HTTP_HOST'] == 'maimiatree.com' ) {
-    $envContent = 'online';
-}
-
-$envContent = $envContent?:'online';
-
-if(file_exists($app->basePath().'/config/env/.env.'.$envContent)){
-    $app->loadEnvironmentFrom('env/.env.'.$envContent);
-    $app->useStoragePath('/data/www/storage/'.$envContent.'.maimaitree.com');
-}
 
 /*
 |--------------------------------------------------------------------------

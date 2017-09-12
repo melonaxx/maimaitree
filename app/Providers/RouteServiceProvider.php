@@ -80,13 +80,5 @@ class RouteServiceProvider extends ServiceProvider
             ->domain(env('BACKEND_DOMAIN', 'admin.maimaitree.com'))
             ->namespace($this->namespace."\\Backend")
             ->group(base_path('routes/backend.php'));
-
-        /*Route::group([
-            'domain' => env('BACKEND_DOMAIN', 'admin.maimaitree.com'),
-            'middleware' => 'backend',
-            'namespace' => $this->namespace."\\Backend",
-        ], function ($router) {
-            require base_path('routes/backend.php');
-        });*/
     }
 }

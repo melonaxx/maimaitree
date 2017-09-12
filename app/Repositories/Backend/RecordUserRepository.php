@@ -25,4 +25,15 @@ class RecordUserRepository extends BaseRepository
     {
         return RecordUser::class;
     }
+
+    public function getUid($openid)
+    {
+
+    }
+
+    public function getUserInfoByOpenId($openid)
+    {
+
+    }
+
 }
