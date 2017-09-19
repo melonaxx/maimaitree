@@ -63,15 +63,14 @@ class WeixinAPIController extends AppBaseController
         if (is_array($data) && !isset($data['errcode'])) {
             $open_id     = $data['openid'];
             $session_key = $data['session_key'];
-            $union_id    = $data['unionid'];
             $token       = self::TOKEN;
 
-            $user_id = $open_id . ';' . $session_key . ';' . $union_id . ';' . $token;
+            $user_id = $open_id . ';' . $session_key . ';' . $token;
             $rd3_key = md5($user_id);
             Redis::command('set', [$rd3_key, $user_id]);
             $wx_data = array('rd3_session' => $rd3_key);
         } else {
-            return $this->sendError([],'404','参数不正确！');
+            return $this->sendError([], '404', '参数不正确！');
         }
 
         return $this->sendResponse($wx_data);
