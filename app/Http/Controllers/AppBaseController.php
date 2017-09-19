@@ -18,12 +18,12 @@ use Response;
  */
 class AppBaseController extends Controller
 {
-    public function sendResponse($result, $message = '操作成功！', $code = '9999')
+    public function sendResponse($result, $code = '9999', $message = '操作成功！')
     {
         return Response::json(ResponseUtil::makeResponse($message, $result, $code));
     }
 
-    public function sendError(array $data = [], $error = '操作失败！', $code = '404')
+    public function sendError(array $data = [], $code = '404', $error = '操作失败！')
     {
         return Response::json(ResponseUtil::makeError($error, $data, $code));
     }
