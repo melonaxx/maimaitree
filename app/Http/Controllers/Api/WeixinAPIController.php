@@ -66,7 +66,7 @@ class WeixinAPIController extends AppBaseController
             $token       = self::TOKEN;
 
             $user_id = $open_id . ';' . $session_key . ';' . $token;
-            $rd3_key = md5($user_id);
+            $rd3_key = md5(md5($user_id).$token);
             Redis::command('set', [$rd3_key, $user_id]);
             $wx_data = array('rd3_session' => $rd3_key);
         } else {
