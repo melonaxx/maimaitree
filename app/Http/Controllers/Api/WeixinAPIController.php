@@ -233,8 +233,8 @@ class WeixinAPIController extends AppBaseController
         $uid            = $rd3_session ? $this->recordUserRepository->getUid($rd3_session) : '';
         $data['uid']    = $uid;
         $data['type']   = $request->input('typeid', '');
-        $data['salary'] = $request->input('salary', '');
-        $data['remark'] = $request->input('remark', '');
+        $data['salary'] = (int)$request->input('salary', '')*100;
+        $data['remark'] = (string)$request->input('remark', '');
         $data['date']   = $request->input('time', '');
 
         if ($id) {
