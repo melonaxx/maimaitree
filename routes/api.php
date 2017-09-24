@@ -36,6 +36,8 @@ Route::group(['prefix' => 'miniapp',], function () {
 
     Route::get('/recordStatistics','WeixinAPIController@recordStatistics');//记工簿统计数据页
 
+    Route::get('/recordTest','WeixinAPIController@recordTest');//测试接口
+
 });
 
 

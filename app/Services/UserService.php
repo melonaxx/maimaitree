@@ -17,17 +17,17 @@ class UserService
 
     public function getUid($openid)
     {
-        $this->$recordUserRepository->getUid($openid);
+        $this->recordUserRepository->getUid($openid);
     }
 
     public function getUserInfoByOpenId($openid)
     {
-        $this->$recordUserRepository->getUserInfoByOpenId($openid);
+        $this->recordUserRepository->getUserInfoByOpenId($openid);
     }
 
     public function addRecordUser($param)
     {
-        $res = $this->$recordUserRepository->create($param);
+        $res = $this->recordUserRepository->create($param);
 
         return $res ? true : false;
     }

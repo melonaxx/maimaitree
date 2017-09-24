@@ -10,6 +10,8 @@ use Response;
 use App\Extend\Utils;
 use Illuminate\Support\Facades\Redis;
 use App\Models\Backend\RecordWork;
+use App\Repositories\Backend\RecordUserRepository;
+use App\Repositories\Backend\RecordWorkRepository;
 
 /**
  * Class WeixinController
@@ -20,6 +22,14 @@ class WeixinAPIController extends AppBaseController
     const TOKEN     = 'yLqTwVhCnZbUBchmM7dKCwzau278GWT9';
     const WX_APPID  = 'wx6dc1d972e14ac50a';
     const WX_SECRET = 'e3845ad66fb5ada5186220e0b236c1c9';
+    private $recordUserRepository;
+    private $recordWorkRepository;
+
+    public function __construct(RecordUserRepository $recordUserRepo, RecordWorkRepository $recordWorkRepo)
+    {
+        $this->recordUserRepository = $recordUserRepo;
+        $this->recordWorkRepository = $recordWorkRepo;
+    }
 
     /**
      * Display a listing of the Weixin.
@@ -55,6 +65,7 @@ class WeixinAPIController extends AppBaseController
     public function wxAppRecordLogin(Request $request)
     {
         $code            = $request->input('code', '');
+        $user_res        = $request->input('userInfo', '');
         $get_open_id_url = 'https://api.weixin.qq.com/sns/jscode2session?appid=' . self::WX_APPID . '&secret=' . self::WX_SECRET . '&js_code=' . $code . '&grant_type=authorization_code';
         $open_res        = Utils::simpleRequest($get_open_id_url);
 
@@ -64,10 +75,29 @@ class WeixinAPIController extends AppBaseController
             $open_id     = $data['openid'];
             $session_key = $data['session_key'];
             $token       = self::TOKEN;
+            $user_param  = array();
 
+            $users = $this->recordUserRepository->findByField('openid', $open_id);
+
+            //添加用户信息
+            if ($user_res && !$users) {
+                $userInfo                   = json_decode($user_res, true);
+                $user_param['openid']       = $open_id;
+                $user_param['nick_name']    = $userInfo['nickName'];
+                $user_param['gender']       = $userInfo['gender'];
+                $user_param['daily_salary'] = 0;
+                $user_param['tel']          = '';
+                $user_param['country']      = $userInfo['country'];
+                $user_param['province']     = $userInfo['province'];
+                $user_param['city']         = $userInfo['city'];
+
+                $this->recordUserRepository->create($user_param);
+            }
+
+            $record_key = 'record_books_keys';
             $user_id = $open_id . ';' . $session_key . ';' . $token;
-            $rd3_key = md5(md5($user_id).$token);
-            Redis::command('set', [$rd3_key, $user_id]);
+            $rd3_key = md5(md5($user_id) . $token);
+            Redis::command('HSET', [$record_key, $rd3_key, $user_id]);
             $wx_data = array('rd3_session' => $rd3_key);
         } else {
             return $this->sendError([], '404', '参数不正确！');
@@ -253,5 +283,12 @@ class WeixinAPIController extends AppBaseController
         );
 
         return $this->sendResponse($data);
+    }
+
+    public function recordTest()
+    {
+        $record_key = 'record_books_keys';
+        $res = Redis::command('HGETALL', [$record_key]);
+        dd($res);
     }
 }
