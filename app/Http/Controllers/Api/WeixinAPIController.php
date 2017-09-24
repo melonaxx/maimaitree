@@ -114,7 +114,7 @@ class WeixinAPIController extends AppBaseController
      */
     public function recordIndex(Request $request)
     {
-        $date         = $request->input('date', date('Y-m-d'));
+        $date         = $request->input('date', '');
         $rd3_session  = $request->input('rd3_session', '');
         $date         = Utils::checkDateIsValid($date) ? $date : date('Y-m');
         $uid          = $this->recordUserRepository->getUid($rd3_session);
@@ -157,10 +157,11 @@ class WeixinAPIController extends AppBaseController
         $data = array(
             'title'        => (int)date('m', strtotime($date)) . '月当前工资',
             'curr_salary'  => '4882.94',
-            'day_salary'   => '200',
+            'day_salary'   => $user['daily_salary'],
             'date'         => $date,
             'date_time'    => $date,
             'work_day'     => $work_day,
+            'session'      => Redis::command('get', [$rd3_session]),
             'month_record' => $month_record,
         );
 
