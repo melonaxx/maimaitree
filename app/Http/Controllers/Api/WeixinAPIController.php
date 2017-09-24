@@ -114,7 +114,7 @@ class WeixinAPIController extends AppBaseController
      */
     public function recordIndex(Request $request)
     {
-        $date         = $request->input('date', '');
+        $date         = $request->input('date', date('Y-m-d'));
         $rd3_session  = $request->input('rd3_session', '');
         $date         = Utils::checkDateIsValid($date) ? $date : date('Y-m');
         $uid          = $this->recordUserRepository->getUid($rd3_session);
