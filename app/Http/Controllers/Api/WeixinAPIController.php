@@ -77,7 +77,7 @@ class WeixinAPIController extends AppBaseController
             $token       = self::TOKEN;
             $user_param  = array();
 
-            $users = $this->recordUserRepository->findByField('openid', $open_id);
+            $users = $this->recordUserRepository->findByField('openid', $open_id)->toArray();
 dd($user_res,!$users,$users);
             //添加用户信息
             if ($user_res && !$users) {
