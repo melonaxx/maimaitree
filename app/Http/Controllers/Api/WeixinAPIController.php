@@ -169,8 +169,13 @@ class WeixinAPIController extends AppBaseController
     public function setDaySalary(Request $request)
     {
         $day_salary = $request->input('day_salary', '');
+        $rd3_session = $request->input('rd3_session', '');
 
-        //这里修改用户单日工资操作 待完善...
+        $uid = $this->recordUserRepository->getUid($rd3_session);
+        //这里修改用户单日工资操作
+        if ($day_salary && $uid) {
+            $this->recordUserRepository->update(['daily_salary',$day_salary],$uid);
+        }
 
         $res = array('daySalary' => $day_salary);
 
@@ -289,6 +294,7 @@ class WeixinAPIController extends AppBaseController
     {
         $record_key = 'record_books_keys';
         $res = Redis::command('HGETALL', [$record_key]);
-        dd($res);
+        $uid = $this->recordUserRepository->getUid('4641b54deb8fda0ffc9150caee8e6950');
+        dd($res,$uid);
     }
 }
