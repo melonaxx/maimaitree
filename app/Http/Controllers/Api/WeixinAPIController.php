@@ -191,7 +191,7 @@ class WeixinAPIController extends AppBaseController
     {
         $record_id  = $request->input('id', '');
         $record_res = $record_id ? ($this->recordWorkRepository->findWithoutFail($record_id)->toArray() ?: []) : [];
-        $date_time  = '';
+        $date_time  = date('Y-m-d');
         $type       = '101';
         $salary     = '';
         $remark     = '';
