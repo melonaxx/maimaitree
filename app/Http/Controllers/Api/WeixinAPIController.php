@@ -157,7 +157,7 @@ class WeixinAPIController extends AppBaseController
         $data = array(
             'title'        => (int)date('m', strtotime($date)) . '月当前工资',
             'curr_salary'  => '4882.94',
-            'day_salary'   => $user['daily_salary'],
+            'day_salary'   => '200',
             'date'         => $date,
             'date_time'    => $date,
             'work_day'     => $work_day,
