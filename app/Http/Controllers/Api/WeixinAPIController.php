@@ -114,9 +114,9 @@ class WeixinAPIController extends AppBaseController
      */
     public function recordIndex(Request $request)
     {
-        $date         = $request->input('date', date('Y-m-d'));
+        $date         = $request->input('date', '');
         $rd3_session  = $request->input('rd3_session', '');
-        $date         = Utils::checkDateIsValid($date) ? $date : date('Y-m');
+        $date         = Utils::checkDateIsValid($date) ? $date : date('Y-m-d');
         $uid          = $this->recordUserRepository->getUid($rd3_session);
         $user         = $this->recordUserRepository->getUserInfoByOpenId($rd3_session);
         $month_record = array();
@@ -124,7 +124,7 @@ class WeixinAPIController extends AppBaseController
 echo $uid;
         if ($uid && $date) {
 
-            $user_record = $this->recordWorkRepository->getRecordListByUidTime($uid, $date.' 00:00:00');
+            $user_record = $this->recordWorkRepository->getRecordListByUidTime($uid, $date);
             $work_day = count($user_record);
 dd($user_record);
             foreach ($user_record as $u_key => $u_value) {
