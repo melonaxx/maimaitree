@@ -121,11 +121,11 @@ class WeixinAPIController extends AppBaseController
         $user         = $this->recordUserRepository->getUserInfoByOpenId($rd3_session);
         $month_record = array();
         $work_day  = '0';
-
+echo $uid;
         if ($uid && $date) {
             $user_record = $this->recordWorkRepository->getRecordListByUidTime($uid, $date);
             $work_day = count($user_record);
-
+dd($user_record);
             foreach ($user_record as $u_key => $u_value) {
                 $one_record = array(
                     'id'      => (string)$u_value['id'],
