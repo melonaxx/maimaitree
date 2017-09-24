@@ -166,7 +166,8 @@ class WeixinAPIController extends AppBaseController
         $day_salary  = $request->input('day_salary', '');
         $rd3_session = $request->input('rd3_session', '');
 
-        $id = $this->recordUserRepository->getUserInfoByOpenId($rd3_session);
+        $user = $this->recordUserRepository->getUserInfoByOpenId($rd3_session);
+        $id = $user ? $user['id'] : '';
         //这里修改用户单日工资操作
         if ($day_salary && $id) {
             $this->recordUserRepository->update(['daily_salary' => $day_salary], $id);
