@@ -78,7 +78,7 @@ class WeixinAPIController extends AppBaseController
             $user_param  = array();
 
             $users = $this->recordUserRepository->findByField('openid', $open_id)->toArray();
-dd($user_res,!$users,$users);
+
             //添加用户信息
             if ($user_res && !$users) {
                 $userInfo                   = json_decode($user_res, true);
@@ -92,7 +92,6 @@ dd($user_res,!$users,$users);
                 $user_param['city']         = $userInfo['city'];
 
                 $aa = $this->recordUserRepository->create($user_param);
-                dd($aa);
             }
 
             $record_key = 'record_books_keys';
