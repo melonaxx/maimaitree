@@ -115,22 +115,31 @@ class WeixinAPIController extends AppBaseController
     public function recordIndex(Request $request)
     {
         $date         = $request->input('date', '');
-        $rd3_key      = $request->input('rd3_session', '');
+        $rd3_session  = $request->input('rd3_session', '');
         $date         = Utils::checkDateIsValid($date) ? $date : date('Y-m');
+        $uid          = $this->recordUserRepository->getUid($rd3_session);
+        $user         = $this->recordUserRepository->getUserInfoByOpenId($rd3_session);
         $month_record = array();
-        $wx_oppen_id  = '';
+        $work_day  = '0';
 
-        $rd3_session = Redis::command('get', [$rd3_key]);
+        if ($uid && $date) {
+            $user_record = $this->recordWorkRepository->getRecordListByUidTime($uid, $date);
+            $work_day = count($user_record);
 
-        //获取user openid
-        if ($rd3_session && $rd3_session != '') {
-            $rd3_str = explode(';', $rd3_session);
-
-            if (count($rd3_str) >= 3) {
-                $wx_oppen_id = $rd3_str[0];
+            foreach ($user_record as $u_key => $u_value) {
+                $one_record = array(
+                    'id'      => (string)$u_value['id'],
+                    'current' => (string)date('d', strtotime($u_value['date'])),
+                    'title'   => RecordWork::$TYPELIST[$u_value['type']]['title'],
+                    'remark'  => $u_value['remark'] ?: '',
+                    'day'     => $u_value['type'] == RecordWork::TYPE_WORK ? '1天' : '',
+                    'salary'  => $u_value['salary'] . '元',
+                );
+                array_push($month_record, $one_record);
             }
 
         }
+
 
         for ($i = 1; $i < 18; $i++) {
 
@@ -148,13 +157,10 @@ class WeixinAPIController extends AppBaseController
         $data = array(
             'title'        => (int)date('m', strtotime($date)) . '月当前工资',
             'curr_salary'  => '4882.94',
-            'day_salary'   => '220',
+            'day_salary'   => $user['daily_salary'],
             'date'         => $date,
             'date_time'    => $date,
-            'work_day'     => '23',
-            'openid'       => $wx_oppen_id,
-            'rd3_session'  => $rd3_session,
-            'session'      => Redis::command('get', [$rd3_session]),
+            'work_day'     => $work_day,
             'month_record' => $month_record,
         );
 
@@ -250,8 +256,6 @@ class WeixinAPIController extends AppBaseController
         } else {
             $result = array('e' => '404', 'm' => '添加失败！');
         }
-
-        //$result = is_array($data) ? array('e' => '9999', 'm' => '添加成功！') : array('e' => '404', 'm' => '添加失败！');
 
         return $this->sendResponse($result);
     }

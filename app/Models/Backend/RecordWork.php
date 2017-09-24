@@ -13,40 +13,41 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class RecordWork extends Model
 {
     use SoftDeletes;
-
     public $table = 'record_works';
-    
-
     protected $dates = ['deleted_at'];
 
+    const TYPE_WORK        = '101';
+    const TYPE_OVERTIME    = '102';
+    const TYPE_LEAVE       = '103';
+    const TYPE_REST        = '104';
+    const TYPE_ABSENTEEISM = '105';
     public static $TYPELIST = array(
-        array(
+        self::TYPE_WORK => array(
             'id'    => '101',
             'title' => '出勤',
             'image' => '/public/images/work.png',
         ),
-        array(
+        self::TYPE_OVERTIME => array(
             'id'    => '102',
             'title' => '加班',
             'image' => '/public/images/overtime.png',
         ),
-        array(
+        self::TYPE_LEAVE => array(
             'id'    => '103',
             'title' => '请假',
             'image' => '/public/images/leave.png',
         ),
-        array(
+        self::TYPE_REST => array(
             'id'    => '104',
             'title' => '调休',
             'image' => '/public/images/rest.png',
         ),
-        array(
+        self::TYPE_ABSENTEEISM => array(
             'id'    => '105',
             'title' => '旷工',
             'image' => '/public/images/absenteeism.png',
         ),
     );
-
 
     public $fillable = [
         'uid',
@@ -55,7 +56,7 @@ class RecordWork extends Model
         'salary',
         'remark',
         'date',
-        'work_time'
+        'work_time',
     ];
 
     /**
@@ -64,10 +65,10 @@ class RecordWork extends Model
      * @var array
      */
     protected $casts = [
-        'uid' => 'integer',
-        'salary' => 'integer',
-        'remark' => 'string',
-        'work_time' => 'string'
+        'uid'       => 'integer',
+        'salary'    => 'integer',
+        'remark'    => 'string',
+        'work_time' => 'string',
     ];
 
     /**
@@ -76,8 +77,6 @@ class RecordWork extends Model
      * @var array
      */
     public static $rules = [
-        
-    ];
 
-    
+    ];
 }
