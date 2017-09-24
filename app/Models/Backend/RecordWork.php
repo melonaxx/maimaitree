@@ -19,6 +19,34 @@ class RecordWork extends Model
 
     protected $dates = ['deleted_at'];
 
+    public static $TYPELIST = array(
+        array(
+            'id'    => '101',
+            'title' => '出勤',
+            'image' => '/public/images/work.png',
+        ),
+        array(
+            'id'    => '102',
+            'title' => '加班',
+            'image' => '/public/images/overtime.png',
+        ),
+        array(
+            'id'    => '103',
+            'title' => '请假',
+            'image' => '/public/images/leave.png',
+        ),
+        array(
+            'id'    => '104',
+            'title' => '调休',
+            'image' => '/public/images/rest.png',
+        ),
+        array(
+            'id'    => '105',
+            'title' => '旷工',
+            'image' => '/public/images/absenteeism.png',
+        ),
+    );
+
 
     public $fillable = [
         'uid',

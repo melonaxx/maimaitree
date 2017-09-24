@@ -95,8 +95,8 @@ class WeixinAPIController extends AppBaseController
             }
 
             $record_key = 'record_books_keys';
-            $user_id = $open_id . ';' . $session_key . ';' . $token;
-            $rd3_key = md5(md5($user_id) . $token);
+            $user_id    = $open_id . ';' . $session_key . ';' . $token;
+            $rd3_key    = md5(md5($user_id) . $token);
             Redis::command('HSET', [$record_key, $rd3_key, $user_id]);
             $wx_data = array('rd3_session' => $rd3_key);
         } else {
@@ -168,13 +168,13 @@ class WeixinAPIController extends AppBaseController
      */
     public function setDaySalary(Request $request)
     {
-        $day_salary = $request->input('day_salary', '');
+        $day_salary  = $request->input('day_salary', '');
         $rd3_session = $request->input('rd3_session', '');
 
         $uid = $this->recordUserRepository->getUid($rd3_session);
         //这里修改用户单日工资操作
         if ($day_salary && $uid) {
-            $this->recordUserRepository->update(['daily_salary',$day_salary],$uid);
+            $this->recordUserRepository->update(['daily_salary' => $day_salary], $uid);
         }
 
         $res = array('daySalary' => $day_salary);
@@ -189,43 +189,32 @@ class WeixinAPIController extends AppBaseController
      */
     public function recordCreate(Request $request)
     {
-        $record_id = $request->input('id', '');
+        $record_id  = $request->input('id', '');
+        $record_res = $record_id ? ($this->recordWorkRepository->findWithoutFail($record_id)->toArray() ?: []) : [];
+        $date_time  = '';
+        $type       = '101';
+        $salary     = '';
+        $remark     = '';
+        $inctype    = array('101', '102');
+        $dectype    = array('103', '104', '105');
+
+
+        if ($record_id && $record_res) {
+            $date_time = date('Y-m-d', strtotime($record_res['date']));
+            $type      = $record_res['type'];
+            $salary    = $record_res['salary'];
+            $remark    = $record_res['remark'];
+        }
 
         $data = array(
-            'type_list' => array(
-                array(
-                    'id'    => '1',
-                    'title' => '出勤',
-                    'image' => '/public/images/work.png',
-                ),
-                array(
-                    'id'    => '2',
-                    'title' => '加班',
-                    'image' => '/public/images/overtime.png',
-                ),
-                array(
-                    'id'    => '3',
-                    'title' => '请假',
-                    'image' => '/public/images/leave.png',
-                ),
-                array(
-                    'id'    => '4',
-                    'title' => '调休',
-                    'image' => '/public/images/rest.png',
-                ),
-                array(
-                    'id'    => '5',
-                    'title' => '旷工',
-                    'image' => '/public/images/absenteeism.png',
-                ),
-            ),
+            'type_list' => RecordWork::$TYPELIST,
             'id'        => $record_id,
-            'date_time' => '2017-06-14',
-            'type'      => '2',
-            'salary'    => '220',
-            'remark'    => '加班好辛苦哦！',
-            'inctype'   => array('1', '2'),
-            'dectype'   => array('3', '4', '5'),
+            'date_time' => $date_time,
+            'type'      => $type,
+            'salary'    => $salary,
+            'remark'    => $remark,
+            'inctype'   => $inctype,
+            'dectype'   => $dectype,
         );
 
         return $this->sendResponse($data);
@@ -239,11 +228,32 @@ class WeixinAPIController extends AppBaseController
      */
     public function recordStore(Request $request)
     {
-        $data = $request->all();
+        $id             = $request->input('id', '');
+        $rd3_session    = $request->input('rd3_session', '');
+        $uid            = $rd3_session ? $this->recordUserRepository->getUid($rd3_session) : '';
+        $data['uid']    = $uid;
+        $data['type']   = $request->input('typeid', '');
+        $data['salary'] = $request->input('salary', '');
+        $data['remark'] = $request->input('remark', '');
+        $data['date']   = $request->input('time', '');
 
-        $res = is_array($data) ? array('e' => '9999', 'm' => '添加成功！') : array('e' => '404', 'm' => '添加失败！');
+        if ($id) {
+            //更新
+            $res = $this->recordWorkRepository->update($data, $id);
+        } else {
+            //新增
+            $res = $this->recordWorkRepository->create($data);
+        }
 
-        return $this->sendResponse($res);
+        if ($res) {
+            $result = array('e' => '9999', 'm' => '添加成功！');
+        } else {
+            $result = array('e' => '404', 'm' => '添加失败！');
+        }
+
+        //$result = is_array($data) ? array('e' => '9999', 'm' => '添加成功！') : array('e' => '404', 'm' => '添加失败！');
+
+        return $this->sendResponse($result);
     }
 
     /**
@@ -293,8 +303,9 @@ class WeixinAPIController extends AppBaseController
     public function recordTest()
     {
         $record_key = 'record_books_keys';
-        $res = Redis::command('HGETALL', [$record_key]);
-        $uid = $this->recordUserRepository->getUid('4641b54deb8fda0ffc9150caee8e6950');
-        dd($res,$uid);
+        $res        = Redis::command('HGETALL', [$record_key]);
+        //$uid = $this->recordUserRepository->getUid('4641b54deb8fda0ffc9150caee8e6950');
+        $a = $this->recordUserRepository->update(['daily_salary' => '200'], '1');
+        dd($a);
     }
 }
