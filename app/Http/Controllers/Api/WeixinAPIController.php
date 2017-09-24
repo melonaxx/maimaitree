@@ -91,7 +91,8 @@ class WeixinAPIController extends AppBaseController
                 $user_param['province']     = $userInfo['province'];
                 $user_param['city']         = $userInfo['city'];
 
-                $this->recordUserRepository->create($user_param);
+                $aa = $this->recordUserRepository->create($user_param);
+                dd($aa);
             }
 
             $record_key = 'record_books_keys';
