@@ -91,7 +91,7 @@ class WeixinAPIController extends AppBaseController
                 $user_param['province']     = $userInfo['province'];
                 $user_param['city']         = $userInfo['city'];
 
-                $aa = $this->recordUserRepository->create($user_param);
+                $this->recordUserRepository->create($user_param);
             }
 
             $record_key = 'record_books_keys';
@@ -117,28 +117,28 @@ class WeixinAPIController extends AppBaseController
         $date         = $request->input('date', '');
         $rd3_session  = $request->input('rd3_session', '');
         $date         = Utils::checkDateIsValid($date) ? $date : date('Y-m');
-        $uid          = $this->recordUserRepository->getUid($rd3_session);
-        $user         = $this->recordUserRepository->getUserInfoByOpenId($rd3_session);
+        //$uid          = $this->recordUserRepository->getUid($rd3_session);
+        //$user         = $this->recordUserRepository->getUserInfoByOpenId($rd3_session);
         $month_record = array();
         $work_day  = '0';
 
-        if ($uid && $date) {
-            $user_record = $this->recordWorkRepository->getRecordListByUidTime($uid, $date);
-            $work_day = count($user_record);
-
-            foreach ($user_record as $u_key => $u_value) {
-                $one_record = array(
-                    'id'      => (string)$u_value['id'],
-                    'current' => (string)date('d', strtotime($u_value['date'])),
-                    'title'   => RecordWork::$TYPELIST[$u_value['type']]['title'],
-                    'remark'  => $u_value['remark'] ?: '',
-                    'day'     => $u_value['type'] == RecordWork::TYPE_WORK ? '1天' : '',
-                    'salary'  => $u_value['salary'] . '元',
-                );
-                array_push($month_record, $one_record);
-            }
-
-        }
+        //if ($uid && $date) {
+        //    $user_record = $this->recordWorkRepository->getRecordListByUidTime($uid, $date);
+        //    $work_day = count($user_record);
+        //
+        //    foreach ($user_record as $u_key => $u_value) {
+        //        $one_record = array(
+        //            'id'      => (string)$u_value['id'],
+        //            'current' => (string)date('d', strtotime($u_value['date'])),
+        //            'title'   => RecordWork::$TYPELIST[$u_value['type']]['title'],
+        //            'remark'  => $u_value['remark'] ?: '',
+        //            'day'     => $u_value['type'] == RecordWork::TYPE_WORK ? '1天' : '',
+        //            'salary'  => $u_value['salary'] . '元',
+        //        );
+        //        array_push($month_record, $one_record);
+        //    }
+        //
+        //}
 
 
         for ($i = 1; $i < 18; $i++) {
