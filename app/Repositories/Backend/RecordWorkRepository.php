@@ -2,6 +2,7 @@
 
 namespace App\Repositories\Backend;
 
+use App\Models\Backend\RecordUser;
 use App\Models\Backend\RecordWork;
 use InfyOm\Generator\Common\BaseRepository;
 
@@ -36,5 +37,28 @@ class RecordWorkRepository extends BaseRepository
         $record_list = RecordWork::where('uid', $uid)->where('date', $date)->get()->toArray();
 
         return $record_list;
+    }
+
+    /**
+     * 用户在一个月内的收总和
+     * @param $uid
+     * @param $date
+     * @return float|int
+     */
+    public function getTotalSalaryByUid($uid, $date)
+    {
+        $record_list = RecordWork::where('uid', $uid)->where('data', $date)->get()->toArray();
+        $salary_total = '0';
+        foreach ($record_list as $item) {
+
+            if (in_array($item['type'], [101,102])) {
+                $salary_total+=$item['salary'];
+            } else {
+                $salary_total-=$item['salary'];
+            }
+
+        }
+
+        return $salary_total/100;
     }
 }

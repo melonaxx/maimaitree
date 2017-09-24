@@ -119,45 +119,32 @@ class WeixinAPIController extends AppBaseController
         $date         = Utils::checkDateIsValid($date) ? $date : date('Y-m-d');
         $uid          = $this->recordUserRepository->getUid($rd3_session);
         $user         = $this->recordUserRepository->getUserInfoByOpenId($rd3_session);
+        $curr_salary  = $this->recordWorkRepository->getTotalSalaryByUid($uid, $date);
         $month_record = array();
-        $work_day  = '0';
+        $work_day     = '0';
 
         if ($uid && $date) {
 
             $user_record = $this->recordWorkRepository->getRecordListByUidTime($uid, $date);
-            $work_day = count($user_record);
+            $work_day    = count($user_record);
 
             foreach ($user_record as $u_key => $u_value) {
                 $one_record = array(
                     'id'      => (string)$u_value['id'],
                     'current' => (string)date('d', strtotime($u_value['date'])),
                     'title'   => RecordWork::$TYPELIST[$u_value['type']]['title'],
-                    'remark'  => $u_value['remark'] ?: '',
+                    'remark'  => $u_value['remark'] ? '-' . $u_value['remark'] : '',
                     'day'     => $u_value['type'] == RecordWork::TYPE_WORK ? '1天' : '',
-                    'salary'  => $u_value['salary'] . '元',
+                    'salary'  => $u_value['salary'] / 100 . '元',
                 );
                 array_push($month_record, $one_record);
             }
 
         }
 
-
-        for ($i = 1; $i < 18; $i++) {
-
-            $one_record = array(
-                'id'      => (string)$i,
-                'current' => (string)$i,
-                'title'   => $date ? '加班' : '出勤',
-                'remark'  => $date ? '嗯，又加班！' : '好的一天，不错',
-                'day'     => $date ? '1小时' : '1天',
-                'salary'  => $date ? '80元' : '220元',
-            );
-            array_push($month_record, $one_record);
-        }
-
         $data = array(
             'title'        => (int)date('m', strtotime($date)) . '月当前工资',
-            'curr_salary'  => '4882.94',
+            'curr_salary'  => $curr_salary,
             'day_salary'   => $user['daily_salary'],
             'date'         => $date,
             'date_time'    => $date,
