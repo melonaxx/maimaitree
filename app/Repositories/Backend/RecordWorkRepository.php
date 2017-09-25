@@ -47,7 +47,7 @@ class RecordWorkRepository extends BaseRepository
      */
     public function getTotalSalaryByUid($uid, $date)
     {
-        $record_list = RecordWork::where('uid', $uid)->where('date','like', "%$date")->get()->toArray();
+        $record_list = RecordWork::where('uid', $uid)->where('date','like', "$date%")->get()->toArray();
         var_dump($record_list);
         $salary_total = '0';
         foreach ($record_list as $item) {
