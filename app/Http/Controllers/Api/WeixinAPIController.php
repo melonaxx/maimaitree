@@ -122,7 +122,7 @@ class WeixinAPIController extends AppBaseController
         $curr_salary  = $this->recordWorkRepository->getTotalSalaryByUid($uid, $date);
         $month_record = array();
         $work_day     = '0';
-dd($curr_salary);
+
         if ($uid && $date) {
             $user_record = $this->recordWorkRepository->getRecordListByUidTime($uid, $date);
             $work_day    = count($user_record);
