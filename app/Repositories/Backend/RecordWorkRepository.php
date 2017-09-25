@@ -34,7 +34,7 @@ class RecordWorkRepository extends BaseRepository
      */
     public function getRecordListByUidTime($uid, $date)
     {
-        $record_list = RecordWork::where('uid', $uid)->where('date', $date)->get()->toArray();
+        $record_list = RecordWork::where('uid', $uid)->where('date','like', "$date%")->get()->toArray();
 
         return $record_list;
     }
