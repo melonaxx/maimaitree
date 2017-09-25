@@ -116,7 +116,7 @@ class WeixinAPIController extends AppBaseController
     {
         $date         = $request->input('date', '');
         $rd3_session  = $request->input('rd3_session', '');
-        $date         = Utils::checkDateIsValid($date) ? $date : date('Y-m-d');
+        $date         = Utils::checkDateIsValid($date) ? $date : date('Y-m');
         $uid          = $this->recordUserRepository->getUid($rd3_session);
         $user         = $this->recordUserRepository->getUserInfoByOpenId($rd3_session);
         $curr_salary  = $this->recordWorkRepository->getTotalSalaryByUid($uid, $date);
