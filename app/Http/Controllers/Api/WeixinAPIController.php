@@ -166,7 +166,7 @@ class WeixinAPIController extends AppBaseController
         $rd3_session = $request->input('rd3_session', '');
 
         $user = $this->recordUserRepository->getUserInfoByOpenId($rd3_session);
-        $id = $user ? $user['id'] : '';
+        $id   = $user ? $user['id'] : '';
         //这里修改用户单日工资操作
         if ($day_salary && $id) {
             $this->recordUserRepository->update(['daily_salary' => $day_salary], $id);
@@ -256,33 +256,70 @@ class WeixinAPIController extends AppBaseController
      */
     public function recordStatistics(Request $request)
     {
-        $date = $request->input('date', '');
+        $date                = $request->input('date', date('Y-m'));
+        $rd3_session         = $request->input('rd3_session', '');
+        $date                = Utils::checkDateIsValid($date) ? $date : date('Y-m');
+        $uid                 = $this->recordUserRepository->getUid($rd3_session);
+        $total               = 0;
+        $work                = 0;
+        $work_percent        = 0;
+        $overtime            = 0;
+        $overtime_percent    = 0;
+        $leave               = 0;
+        $leave_percent       = 0;
+        $rest                = 0;
+        $rest_percent        = 0;
+        $absenteeism         = 0;
+        $absenteeism_percent = 0;
+
+
+        if ($uid && $date) {
+            $user_record = $this->recordWorkRepository->getRecordListByUidTime($uid, $date);
+
+            foreach ($user_record as $u_key => $u_value) {
+                $total++;
+                if ($u_value['type'] == RecordWork::TYPE_WORK) {
+                    $work++;
+                } elseif ($u_value['type'] == RecordWork::TYPE_OVERTIME) {
+                    $overtime++;
+                } elseif ($u_value['type'] == RecordWork::TYPE_LEAVE) {
+                    $leave++;
+                } elseif ($u_value['type'] == RecordWork::TYPE_REST) {
+                    $rest++;
+                } elseif ($u_value['type'] == RecordWork::TYPE_ABSENTEEISM) {
+                    $absenteeism++;
+                }
+            }
+
+        }
+
+        if ($total) {
+            $work_percent        = ($work / $total) * 100;
+            $overtime_percent    = ($overtime / $total) * 100;
+            $leave_percent       = ($leave / $total) * 100;
+            $rest_percent        = ($rest / $total) * 100;
+            $absenteeism_percent = ($absenteeism / $total) * 100;
+        }
+
 
         $series_data   = array(
-            array('name' => '出勤', 'data' => '23', 'color' => '#87CECB'),
-            array('name' => '加班', 'data' => '3', 'color' => '#90EE90'),
-            array('name' => '请假', 'data' => '1', 'color' => '#FFD700'),
-            array('name' => '调休', 'data' => '2', 'color' => '#D2B48C'),
-            array('name' => '旷工', 'data' => '0', 'color' => '#FA8072'),
+            array('name' => '出勤', 'data' => $work, 'color' => '#87CECB'),
+            array('name' => '加班', 'data' => $overtime, 'color' => '#90EE90'),
+            array('name' => '请假', 'data' => $leave, 'color' => '#FFD700'),
+            array('name' => '调休', 'data' => $rest, 'color' => '#D2B48C'),
+            array('name' => '旷工', 'data' => $absenteeism, 'color' => '#FA8072'),
         );
         $progress_data = array(
-            array('name' => '出勤', 'day' => '23', 'percent' => '60', 'color' => '#87CECB'),
-            array('name' => '加班', 'day' => '3', 'percent' => '10', 'color' => '#90EE90'),
-            array('name' => '请假', 'day' => '2', 'percent' => '5', 'color' => '#FFD700'),
-            array('name' => '调休', 'day' => '1', 'percent' => '2', 'color' => '#D2B48C'),
-            array('name' => '旷工', 'day' => '0', 'percent' => '0', 'color' => '#FA8072'),
+            array('name' => '出勤', 'day' => $work, 'percent' => $work_percent, 'color' => '#87CECB'),
+            array('name' => '加班', 'day' => $overtime, 'percent' => $overtime_percent, 'color' => '#90EE90'),
+            array('name' => '请假', 'day' => $leave, 'percent' => $leave_percent, 'color' => '#FFD700'),
+            array('name' => '调休', 'day' => $rest, 'percent' => $rest_percent, 'color' => '#D2B48C'),
+            array('name' => '旷工', 'day' => $absenteeism, 'percent' => $absenteeism_percent, 'color' => '#FA8072'),
         );
         $date_data     = array(
-            'date_time' => date('Y-m'),
-            'month'     => (int)date('m'),
+            'date_time' => date('Y-m', strtotime($date)),
+            'month'     => (int)date('m', strtotime($date)),
         );
-
-        if ($date && Utils::checkDateIsValid($date)) {
-            $date_data = array(
-                'date_time' => date('Y-m', strtotime($date)),
-                'month'     => (int)date('m', strtotime($date)),
-            );
-        }
 
         $data = array(
             'date'     => $date_data,
