@@ -23,7 +23,14 @@ class YanLingAPIController extends AppBaseController
         $license = $request->input('license','');
         $search_data = array('types'=>$types,'license'=>$license);
         $v_data = Utils::simpleRequest($this->trafficViolationUrl, $search_data);
-        return substr($v_data,0,strrpos($v_data,'<div class="well">'));
+
+        $break_pos = strrpos($v_data,'<div class="well">');
+        if ($break_pos) {
+            return substr($v_data,0,$break_pos);
+        } else {
+            return $v_data;
+        }
+
     }
 
 }
