@@ -26,7 +26,7 @@ class YanLingAPIController extends AppBaseController
         header('Access-Control-Allow-Origin:*');
         $break_pos = strrpos($v_data,'<div class="well">');
         if ($break_pos) {
-            return substr($v_data,0,$break_pos);
+            return preg_replace('/<a .*?href="(.*?)".*?>*<\/a>/is','',substr($v_data,0,$break_pos));
         } else {
             return '<div style="text-align: center;">'.$v_data.'</div>';
         }
