@@ -28,7 +28,7 @@ class YanLingAPIController extends AppBaseController
         if ($break_pos) {
             return substr($v_data,0,$break_pos);
         } else {
-            return $v_data;
+            return '<div style="text-align: center;">'.$v_data.'</div>';
         }
 
     }
