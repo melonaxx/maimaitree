@@ -103,7 +103,7 @@ class WeixinAPIController extends AppBaseController
             return $this->sendError([], '404', '参数不正确！');
         }
 
-        return $this->sendResponse($wx_data);
+        return $this->sendMergeResponse($wx_data);
 
     }
 
@@ -152,7 +152,7 @@ class WeixinAPIController extends AppBaseController
             'month_record' => $month_record,
         );
 
-        return $this->sendResponse($data);
+        return $this->sendMergeResponse(["record" => $data]);
 
     }
 
@@ -174,7 +174,7 @@ class WeixinAPIController extends AppBaseController
 
         $res = array('daySalary' => $day_salary);
 
-        return $this->sendResponse($res);
+        return $this->sendMergeResponse($res);
     }
 
     /**
@@ -184,14 +184,17 @@ class WeixinAPIController extends AppBaseController
      */
     public function recordCreate(Request $request)
     {
-        $record_id  = $request->input('id', '');
-        $record_res = $record_id ? ($this->recordWorkRepository->findWithoutFail($record_id)->toArray() ?: []) : [];
-        $date_time  = date('Y-m-d');
-        $type       = '101';
-        $salary     = '';
-        $remark     = '';
-        $inctype    = array('101', '102');
-        $dectype    = array('103', '104', '105');
+        $record_id   = $request->input('id', '');
+        $rd3_session = $request->input('rd3_session', '');
+        $user        = $this->recordUserRepository->getUserInfoByOpenId($rd3_session);
+        $day_salary  = $user ? $user['daily_salary'] : '';
+        $record_res  = $record_id ? ($this->recordWorkRepository->findWithoutFail($record_id)->toArray() ?: []) : [];
+        $date_time   = date('Y-m-d');
+        $type        = '101';
+        $salary      = $day_salary;
+        $remark      = '';
+        $inctype     = array('101', '102');
+        $dectype     = array('103', '104', '105');
 
 
         if ($record_id && $record_res) {
@@ -202,8 +205,8 @@ class WeixinAPIController extends AppBaseController
         }
 
         $data = array(
-            'type_list' => RecordWork::$TYPELIST,
             'id'        => $record_id,
+            'type_list' => RecordWork::$TYPELIST,
             'date_time' => $date_time,
             'type'      => $type,
             'salary'    => $salary,
@@ -212,7 +215,7 @@ class WeixinAPIController extends AppBaseController
             'dectype'   => $dectype,
         );
 
-        return $this->sendResponse($data);
+        return $this->sendMergeResponse($data);
 
     }
 
@@ -246,7 +249,7 @@ class WeixinAPIController extends AppBaseController
             $result = array('e' => '404', 'm' => '添加失败！');
         }
 
-        return $this->sendResponse($result);
+        return $this->sendMergeResponse($result);
     }
 
     /**

@@ -22,6 +22,10 @@ class AppBaseController extends Controller
     {
         return Response::json(ResponseUtil::makeResponse($message, $result, $code));
     }
+    public function sendMergeResponse($result, $code = '9999', $message = '操作成功！')
+    {
+        return json_encode(array_merge($result,['e'=>$code,'m'=>$message]));
+    }
 
     public function sendError(array $data = [], $code = '404', $error = '操作失败！')
     {
