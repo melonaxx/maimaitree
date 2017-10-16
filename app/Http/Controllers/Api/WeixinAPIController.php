@@ -188,7 +188,8 @@ class WeixinAPIController extends AppBaseController
         $rd3_session = $request->input('rd3_session', '');
         $user        = $this->recordUserRepository->getUserInfoByOpenId($rd3_session);
         $day_salary  = $user ? $user['daily_salary'] : '';
-        $record_res  = $record_id ? ($this->recordWorkRepository->findWithoutFail($record_id)->toArray() ?: []) : [];
+        $r_res       = $this->recordWorkRepository->findWithoutFail($record_id);
+        $record_res  = $record_id ? ($r_res ? $r_res->toArray() : []) : [];
         $date_time   = date('Y-m-d');
         $type        = '101';
         $salary      = $day_salary;
@@ -235,12 +236,12 @@ class WeixinAPIController extends AppBaseController
         $data['remark'] = (string)$request->input('remark', '');
         $data['date']   = $request->input('time', '');
 
-        if ($id) {
-            //更新
-            $res = $this->recordWorkRepository->update($data, $id);
-        } else {
+        if (!$id || $id == 'null') {
             //新增
             $res = $this->recordWorkRepository->create($data);
+        } else {
+            //更新
+            $res = $this->recordWorkRepository->update($data, $id);
         }
 
         if ($res) {
@@ -330,7 +331,7 @@ class WeixinAPIController extends AppBaseController
             'progress' => $progress_data,
         );
 
-        return $this->sendResponse($data);
+        return $this->sendMergeResponse($data);
     }
 
     public function recordTest()

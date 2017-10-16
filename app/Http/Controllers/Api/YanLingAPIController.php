@@ -23,7 +23,7 @@ class YanLingAPIController extends AppBaseController
         $license = $request->input('license','');
         $search_data = array('types'=>$types,'license'=>$license);
         $v_data = Utils::simpleRequest($this->trafficViolationUrl, $search_data);
-        header('Access-Control-Allow-Origin:*');
+        header('Access-Control-Allow-Origin:http://yl0374.com');
         $break_pos = strrpos($v_data,'<div class="well">');
         if ($break_pos) {
             return preg_replace('/<a .*?href="(.*?)".*?>*<\/a>/is','',substr($v_data,0,$break_pos));

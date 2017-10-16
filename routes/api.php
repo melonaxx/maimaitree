@@ -39,10 +39,9 @@ Route::group(['prefix' => 'miniapp',], function () {
     Route::get('/recordTest','WeixinAPIController@recordTest');//测试接口
 
 });
+
 /*鄢陵人网接口*/
 Route::group(['prefix' => 'yl',], function () {
-
-    //消息推送服务器配置接口
     Route::any('/violation','YanLingAPIController@trafficViolation');//车辆违章查询接口
 
 });
