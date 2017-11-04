@@ -156,7 +156,7 @@ class CarPoolService
             $data['carpool']['by_way'] = $c_detail['by_way'];
             $data['carpool']['terminal'] = $c_detail['terminal'];
             $data['carpool']['terminal_longitude'] = $terminal_longitude;
-            $data['carpool']['$terminal_latitude'] = $terminal_latitude;
+            $data['carpool']['terminal_latitude'] = $terminal_latitude;
             $data['carpool']['time'] = date('Y-m-d H:i',$c_detail['time']);
             $data['carpool']['number'] = $c_detail['number'];
             $data['carpool']['price'] = $c_detail['price'];
