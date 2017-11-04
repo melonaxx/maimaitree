@@ -36,3 +36,11 @@
     <a href="{!! route('recordUsers.index') !!}"><i class="fa fa-edit"></i><span>RecordUsers</span></a>
 </li>
 
+<li class="{{ Request::is('users*') ? 'active' : '' }}">
+    <a href="{!! route('users.index') !!}"><i class="fa fa-edit"></i><span>Users</span></a>
+</li>
+
+<li class="{{ Request::is('carpools*') ? 'active' : '' }}">
+    <a href="{!! route('carpools.index') !!}"><i class="fa fa-edit"></i><span>Carpools</span></a>
+</li>
+

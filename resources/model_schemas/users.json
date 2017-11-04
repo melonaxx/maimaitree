@@ -67,7 +67,7 @@
     },
     {
         "name": "phone",
-        "dbType": "integer:unsigned:default,0",
+        "dbType": "string,32:default,''",
         "htmlType": "text",
         "validations": "",
         "searchable": true,

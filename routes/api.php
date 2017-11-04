@@ -38,6 +38,20 @@ Route::group(['prefix' => 'miniapp',], function () {
 
     Route::get('/recordTest','WeixinAPIController@recordTest');//测试接口
 
+    /******carpools******/
+    Route::any('/carpoolLogin','CarpoolApiController@carPoolLogin');//拼车登录
+
+    Route::post('/carpoolAdd','CarpoolApiController@carPoolAdd');//添加拼车信息
+
+    Route::get('/carPoolList','CarpoolApiController@carPoolList');//拼车信息列表
+
+    Route::get('/carPoolDetail','CarpoolApiController@getCarPoolDetailById');//拼车详情信息
+
+    Route::get('/myPublishList','CarpoolApiController@myPublishList');//我发布的拼车信息列表
+
+    Route::get('/carpoolCenter','CarpoolApiController@carpoolCenter');//我的个人中心
+
+
 });
 
 /*鄢陵人网接口*/

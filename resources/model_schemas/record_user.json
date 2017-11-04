@@ -110,6 +110,17 @@
         "inIndex": false
     },
     {
+        "name": "avatar",
+        "dbType": "string,64:default,''",
+        "htmlType": "text",
+        "validations": "",
+        "searchable": false,
+        "fillable": true,
+        "primary": false,
+        "inForm": true,
+        "inIndex": false
+    },
+    {
         "name": "created_at",
         "dbType": "timestamp",
         "htmlType": "",

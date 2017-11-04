@@ -45,7 +45,7 @@
     },
     {
         "name": "phone",
-        "dbType": "integer:unsigned:default,0",
+        "dbType": "string,32:default,''",
         "htmlType": "text",
         "validations": "",
         "searchable": true,
@@ -77,6 +77,17 @@
         "inIndex": true
     },
     {
+        "name": "origin_cross",
+        "dbType": "string,255:default,''",
+        "htmlType": "text",
+        "validations": "",
+        "searchable": true,
+        "fillable": true,
+        "primary": false,
+        "inForm": true,
+        "inIndex": true
+    },
+    {
         "name": "by_way",
         "dbType": "string,64:default,''",
         "htmlType": "text",
@@ -99,8 +110,19 @@
         "inIndex": true
     },
     {
+        "name": "terminal_cross",
+        "dbType": "string,255:default,''",
+        "htmlType": "text",
+        "validations": "",
+        "searchable": true,
+        "fillable": true,
+        "primary": false,
+        "inForm": true,
+        "inIndex": true
+    },
+    {
         "name": "time",
-        "dbType": "date:nullable",
+        "dbType": "integer:unsigned:default,0",
         "htmlType": "text",
         "validations": "",
         "searchable": true,

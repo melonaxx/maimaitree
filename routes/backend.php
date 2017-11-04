@@ -8,6 +8,12 @@ Route::get('login', function(){
     return view('/backend/login');
 });
 
-Route::resource('tests', 'TestController');
-Route::resource('recordWorks', 'RecordWorkController');
-Route::resource('recordUsers', 'RecordUserController');
+Route::resource('tests', 'TestController');//测试
+
+Route::resource('recordWorks', 'RecordWorkController');//记工簿记录
+
+Route::resource('recordUsers', 'RecordUserController');//记工簿用户
+
+Route::resource('users', 'UsersController');//拼车用户
+
+Route::resource('carpools', 'CarpoolsController');//拼车信息
