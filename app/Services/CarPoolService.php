@@ -133,7 +133,7 @@ class CarPoolService
     {
         $id = $request->input('id','');
         $token = $request->input('token','');
-        $token = "31adb99d98561553a8984304cb93f119";
+        //$token = "31adb99d98561553a8984304cb93f119";
         $u_info = Users::getInfoByToken($token);
         $c_detail = $id ? $this->carpoolRepository->getCarPoolDetailById($id) : array();
         $data = array();
@@ -174,8 +174,8 @@ class CarPoolService
 
     public function myPublishList(Request $request)
     {
-        //$token = $request->input('token','');
-        $token = "31adb99d98561553a8984304cb93f119";
+        $token = $request->input('token','');
+        //$token = "31adb99d98561553a8984304cb93f119";
         $uid = Users::getUidByToken($token);
         $m_data = array();
 
@@ -202,8 +202,8 @@ class CarPoolService
 
     public function carpoolCenter(Request $request)
     {
-        //$token = $request->input('token','');
-        $token = "31adb99d98561553a8984304cb93f119";
+        $token = $request->input('token','');
+        //$token = "31adb99d98561553a8984304cb93f119";
         $u_info = $token ? Users::getInfoByToken($token) : [];
         $c_data = array();
 
