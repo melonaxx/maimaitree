@@ -164,7 +164,7 @@ class CarPoolService
             $data['carpool']['car_type'] = $c_detail['car_type'];
             $data['carpool']['volume'] = $c_detail['volume'];
             $data['carpool']['weight'] = $c_detail['weight'];
-            $data['carpool']['frequency'] = $c_detail['frequency'];
+            $data['carpool']['frequency'] = Carpools::$FREQUENCY[$c_detail['frequency']]['name'];
             $data['carpool']['remark'] = $c_detail['remark'];
             $data['carpool']['publish_time'] = Utils::formatTime($c_detail['created_at']);
         }
