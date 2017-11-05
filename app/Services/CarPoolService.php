@@ -65,7 +65,7 @@ class CarPoolService
 
                 $u_res = $this->userRepository->create($user_param);
             } else {
-                $uid = $users['id'];
+                $uid = current($users)['id'];
             }
 
             if ($u_res) {
