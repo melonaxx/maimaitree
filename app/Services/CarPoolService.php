@@ -67,8 +67,7 @@ class CarPoolService
             if ($u_res) {
                 $map     = Users::REDIS_KEY;
                 $user_id = $open_id . ';' . $u_res['id'];
-                //$rd3_key = md5(md5($user_id) . $session_key . $token);
-                $rd3_key = md5(md5($user_id) . $token);
+                $rd3_key = md5(md5($user_id) . $session_key . $token);
                 CacheDriver::HSET($map, $rd3_key, $user_id);
                 $wx_data = array('rd3_token' => $rd3_key);
             }
