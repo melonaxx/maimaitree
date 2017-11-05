@@ -31,7 +31,13 @@ class UsersRepository extends BaseRepository
 
     public function getInfoByUid($uid)
     {
-        $user = Users::find($uid);
+        $user = false;
+        if ($uid) {
+            $user = Users::find($uid);
+            if (!$user) {
+                $user = false;
+            }
+        }
         return $user;
     }
 }

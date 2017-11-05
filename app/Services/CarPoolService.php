@@ -67,7 +67,8 @@ class CarPoolService
             if ($u_res) {
                 $map     = Users::REDIS_KEY;
                 $user_id = $open_id . ';' . $u_res['id'];
-                $rd3_key = md5(md5($user_id) . $session_key . $token);
+                //$rd3_key = md5(md5($user_id) . $session_key . $token);
+                $rd3_key = md5(md5($user_id) . $token);
                 CacheDriver::HSET($map, $rd3_key, $user_id);
                 $wx_data = array('rd3_token' => $rd3_key);
             }
@@ -105,8 +106,8 @@ class CarPoolService
                 $status_text = $c_value['status'] == Carpools::STATUS_CANCEL ? '已取消' : ($c_value['time'] < time() ? '已过期' : '进行中');
                 $tmp_data = array();
                 $tmp_data['id'] = $c_value['id'];
-                $tmp_data['user']['avatar'] = $u_info['avatar'];
-                $tmp_data['user']['name'] = $c_value['name'] ? $c_value['name'] : Users::getNameByUid($u_info['id']);
+                $tmp_data['user']['avatar'] = $u_info ? $u_info['avatar'] : '';
+                $tmp_data['user']['name'] = $c_value['name'] ? $c_value['name'] : Users::getNameByUid($uid);
                 $tmp_data['user']['sex'] = $c_value['sex'];
                 $tmp_data['user']['phone'] = $c_value['phone'];
                 $tmp_data['user']['type'] = $c_value['type'];
@@ -119,6 +120,7 @@ class CarPoolService
                 $tmp_data['carpool']['remark'] = $c_value['remark'];
                 $tmp_data['carpool']['number'] = $c_value['number'];
                 $tmp_data['carpool']['price'] = $c_value['price'];
+                $tmp_data['carpool']['frequency'] = Carpools::$FREQUENCY[$c_value['frequency']]['name'];
                 $tmp_data['carpool']['status'] = $c_value['status'];
                 $tmp_data['carpool']['status_text'] = $status_text;
 

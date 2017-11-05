@@ -27,9 +27,11 @@ class Carpools extends Model
         self::STATUS_CANCEL => array('name'=>'已取消'),
     );
 
+    const FREQUENCY_DEFAULT = 0;
     const FREQUENCY_NORMAL = 1;
     const FREQUENCY_ABNORMAL = 2;
     public static $FREQUENCY = array(
+        self::FREQUENCY_DEFAULT => array('name'=>''),
         self::FREQUENCY_NORMAL => array('name'=>'临时'),
         self::FREQUENCY_ABNORMAL => array('name'=>'长期'),
     );
