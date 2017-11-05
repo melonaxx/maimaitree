@@ -43,6 +43,7 @@ class CarPoolService
             $user_param  = array();
             $u_res       = array();
             $wx_data     = array();
+            $uid         = '';
 
             $users = $this->userRepository->findByField('openid', $open_id)->toArray();
 
@@ -63,14 +64,22 @@ class CarPoolService
                 $user_param['status']   = Users::STATUS_NORMAL;
 
                 $u_res = $this->userRepository->create($user_param);
+            } else {
+                $uid = $users['id'];
             }
+
             if ($u_res) {
+                $uid = $u_res['id'];
+            }
+
+            if ($uid) {
                 $map     = Users::REDIS_KEY;
-                $user_id = $open_id . ';' . $u_res['id'];
+                $user_id = $open_id . ';' . $uid;
                 $rd3_key = md5(md5($user_id) . $session_key . $token);
                 CacheDriver::HSET($map, $rd3_key, $user_id);
                 $wx_data = array('rd3_token' => $rd3_key);
             }
+
 
         }
 
@@ -134,7 +143,6 @@ class CarPoolService
     {
         $id = $request->input('id','');
         $token = $request->input('token','');
-        //$token = "31adb99d98561553a8984304cb93f119";
         $u_info = Users::getInfoByToken($token);
         $c_detail = $id ? $this->carpoolRepository->getCarPoolDetailById($id) : array();
         $data = array();
