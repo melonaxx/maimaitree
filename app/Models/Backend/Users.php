@@ -142,5 +142,16 @@ class Users extends Model
 
         return $name;
     }
+
+    public static function getInfoByUid($uid)
+    {
+        $info = array();
+        if ($uid) {
+            $u_res = self::find($uid);
+            $info = $u_res ? $u_res->toArray(): array();
+        }
+
+        return $info;
+    }
     
 }

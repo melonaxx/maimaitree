@@ -142,20 +142,19 @@ class CarPoolService
     public function getCarPoolDetailById(Request $request)
     {
         $id = $request->input('id','');
-        $token = $request->input('token','');
-        $u_info = Users::getInfoByToken($token);
         $c_detail = $id ? $this->carpoolRepository->getCarPoolDetailById($id) : array();
         $data = array();
-        if ($u_info && $c_detail) {
+        if ($c_detail) {
             $origin_cross = explode('&',$c_detail['origin_cross']);
             $terminal_cross = explode('&',$c_detail['terminal_cross']);
             $origin_longitude = ($origin_cross) > 1 ? $origin_cross[0] : '';
             $origin_latitude = ($origin_cross) > 1 ? $origin_cross[1] : '';
             $terminal_longitude = ($terminal_cross) > 1 ? $terminal_cross[0] : '';
             $terminal_latitude = ($terminal_cross) > 1 ? $terminal_cross[1] : '';
-
+            $uid = $c_detail['uid'];
+            $u_info = Users::getInfoByUid($uid);
             $data['user']['avatar'] = $u_info['avatar'];
-            $data['user']['name'] = $c_detail['name'];
+            $data['user']['name'] = Users::getNameByUid($uid);
             $data['user']['sex'] = $c_detail['sex'];
             $data['user']['phone'] = $c_detail['phone'];
             $data['carpool']['type'] = $c_detail['type'];
@@ -212,7 +211,6 @@ class CarPoolService
     public function carpoolCenter(Request $request)
     {
         $token = $request->input('token','');
-        //$token = "31adb99d98561553a8984304cb93f119";
         $u_info = $token ? Users::getInfoByToken($token) : [];
         $c_data = array();
 
