@@ -154,7 +154,7 @@ class CarPoolService
             $uid = $c_detail['uid'];
             $u_info = Users::getInfoByUid($uid);
             $data['user']['avatar'] = $u_info['avatar'];
-            $data['user']['name'] = Users::getNameByUid($uid);
+            $data['user']['name'] = $c_detail['name'] ? : Users::getNameByUid($uid);
             $data['user']['sex'] = $c_detail['sex'];
             $data['user']['phone'] = $c_detail['phone'];
             $data['carpool']['type'] = $c_detail['type'];
