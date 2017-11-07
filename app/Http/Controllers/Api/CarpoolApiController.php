@@ -40,7 +40,7 @@ class CarpoolApiController extends AppBaseController
         if (!$data) {
             return $this->sendError([], '404', '添加失败');
         } else {
-            return $this->sendMergeResponse([]);
+            return $this->sendMergeResponse(['action'=>$data]);
         }
 
     }

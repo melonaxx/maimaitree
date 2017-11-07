@@ -89,9 +89,21 @@ class CarPoolService
     public function getCarpoolAdd(Request $request)
     {
         $c_data = $this->carpoolRepository->filterCarpool($request);
-        $c_res = $this->carpoolRepository->create($c_data);
 
-        return $c_res;
+        $c_result = '';
+        if ($c_data) {
+            $id = isset($c_data['id']) ? $c_data['id'] : '';
+            if ($id) {
+                unset($c_data['id']);
+                $c_res  = $this->carpoolRepository->update($c_data,$id);
+                $c_result = $c_res ? 'update' : '';
+            } else {
+                $c_res  = $this->carpoolRepository->create($c_data);
+                $c_result = $c_res ? 'add' : '';
+            }
+        }
+
+        return $c_result;
     }
 
     public function getCarpoolList($request)
@@ -103,34 +115,34 @@ class CarPoolService
         $c_list = array();
 
         if (count($c_data) > 0) {
-            foreach ($c_data as $c_key=>$c_value) {
+            foreach ($c_data as $c_key => $c_value) {
                 if ($c_value['status'] != Carpools::STATUS_NORMAL) {
                     continue;
                 }
-                $uid = $c_value['uid'];
-                $u_res = $this->userRepository->getInfoByUid($uid);
-                $c_count = $this->carpoolRepository->getCarpoolCountByUid($uid);
-                $u_info = $u_res ? $u_res->toArray() : [];
-                $status_text = $c_value['status'] == Carpools::STATUS_CANCEL ? '已取消' : ($c_value['time'] < time() ? '已过期' : '进行中');
-                $tmp_data = array();
-                $tmp_data['id'] = $c_value['id'];
-                $tmp_data['user']['avatar'] = $u_info ? $u_info['avatar'] : '';
-                $tmp_data['user']['name'] = $c_value['name'] ? $c_value['name'] : Users::getNameByUid($uid);
-                $tmp_data['user']['sex'] = $c_value['sex'];
-                $tmp_data['user']['phone'] = $c_value['phone'];
-                $tmp_data['user']['type'] = $c_value['type'];
-                $tmp_data['user']['count'] = $c_count;
-                $tmp_data['carpool']['origin'] = $c_value['origin'];
-                $tmp_data['carpool']['by_way'] = $c_value['by_way'];
-                $tmp_data['carpool']['terminal'] = $c_value['terminal'];
-                $tmp_data['carpool']['time'] = date('Y-m-d H:i',$c_value['time']);
+                $uid                                 = $c_value['uid'];
+                $u_res                               = $this->userRepository->getInfoByUid($uid);
+                $c_count                             = $this->carpoolRepository->getCarpoolCountByUid($uid);
+                $u_info                              = $u_res ? $u_res->toArray() : [];
+                $status_text                         = $c_value['status'] == Carpools::STATUS_CANCEL ? '已取消' : ($c_value['time'] < time() ? '已过期' : '进行中');
+                $tmp_data                            = array();
+                $tmp_data['id']                      = $c_value['id'];
+                $tmp_data['user']['avatar']          = $u_info ? $u_info['avatar'] : '';
+                $tmp_data['user']['name']            = $c_value['name'] ? $c_value['name'] : Users::getNameByUid($uid);
+                $tmp_data['user']['sex']             = $c_value['sex'];
+                $tmp_data['user']['phone']           = $c_value['phone'];
+                $tmp_data['user']['type']            = $c_value['type'];
+                $tmp_data['user']['count']           = $c_count;
+                $tmp_data['carpool']['origin']       = $c_value['origin'];
+                $tmp_data['carpool']['by_way']       = $c_value['by_way'];
+                $tmp_data['carpool']['terminal']     = $c_value['terminal'];
+                $tmp_data['carpool']['time']         = date('Y-m-d H:i', $c_value['time']);
                 $tmp_data['carpool']['publish_time'] = Utils::formatTime($c_value['created_at']);
-                $tmp_data['carpool']['remark'] = $c_value['remark'];
-                $tmp_data['carpool']['number'] = $c_value['number'];
-                $tmp_data['carpool']['price'] = $c_value['price'];
-                $tmp_data['carpool']['frequency'] = Carpools::$FREQUENCY[$c_value['frequency']]['name'];
-                $tmp_data['carpool']['status'] = $c_value['status'];
-                $tmp_data['carpool']['status_text'] = $status_text;
+                $tmp_data['carpool']['remark']       = $c_value['remark'];
+                $tmp_data['carpool']['number']       = $c_value['number'];
+                $tmp_data['carpool']['price']        = $c_value['price'];
+                $tmp_data['carpool']['frequency']    = Carpools::$FREQUENCY[$c_value['frequency']]['name'];
+                $tmp_data['carpool']['status']       = $c_value['status'];
+                $tmp_data['carpool']['status_text']  = $status_text;
 
                 array_push($c_list, $tmp_data);
             }
@@ -141,40 +153,43 @@ class CarPoolService
 
     public function getCarPoolDetailById(Request $request)
     {
-        $id = $request->input('id','');
+        $id       = $request->input('id', '');
         $c_detail = $id ? $this->carpoolRepository->getCarPoolDetailById($id) : array();
-        $data = array();
+        $data     = array();
         if ($c_detail) {
-            $origin_cross = explode('&',$c_detail['origin_cross']);
-            $terminal_cross = explode('&',$c_detail['terminal_cross']);
-            $origin_longitude = ($origin_cross) > 1 ? $origin_cross[0] : '';
-            $origin_latitude = ($origin_cross) > 1 ? $origin_cross[1] : '';
-            $terminal_longitude = ($terminal_cross) > 1 ? $terminal_cross[0] : '';
-            $terminal_latitude = ($terminal_cross) > 1 ? $terminal_cross[1] : '';
-            $uid = $c_detail['uid'];
-            $u_info = Users::getInfoByUid($uid);
-            $data['user']['avatar'] = $u_info['avatar'];
-            $data['user']['name'] = $c_detail['name'] ? : Users::getNameByUid($uid);
-            $data['user']['sex'] = $c_detail['sex'];
-            $data['user']['phone'] = $c_detail['phone'];
-            $data['carpool']['type'] = $c_detail['type'];
-            $data['carpool']['origin'] = $c_detail['origin'];
-            $data['carpool']['origin_longitude'] = $origin_longitude;
-            $data['carpool']['origin_latitude'] = $origin_latitude;
-            $data['carpool']['by_way'] = $c_detail['by_way'];
-            $data['carpool']['terminal'] = $c_detail['terminal'];
+            $origin_cross                          = explode('&', $c_detail['origin_cross']);
+            $terminal_cross                        = explode('&', $c_detail['terminal_cross']);
+            $origin_longitude                      = ($origin_cross) > 1 ? $origin_cross[0] : '';
+            $origin_latitude                       = ($origin_cross) > 1 ? $origin_cross[1] : '';
+            $terminal_longitude                    = ($terminal_cross) > 1 ? $terminal_cross[0] : '';
+            $terminal_latitude                     = ($terminal_cross) > 1 ? $terminal_cross[1] : '';
+            $uid                                   = $c_detail['uid'];
+            $u_info                                = Users::getInfoByUid($uid);
+            $data['user']['avatar']                = $u_info['avatar'];
+            $data['user']['name']                  = $c_detail['name'] ?: Users::getNameByUid($uid);
+            $data['user']['sex']                   = $c_detail['sex'];
+            $data['user']['phone']                 = $c_detail['phone'];
+            $data['carpool']['type']               = $c_detail['type'];
+            $data['carpool']['origin']             = $c_detail['origin'];
+            $data['carpool']['origin_longitude']   = $origin_longitude;
+            $data['carpool']['origin_latitude']    = $origin_latitude;
+            $data['carpool']['by_way']             = $c_detail['by_way'];
+            $data['carpool']['terminal']           = $c_detail['terminal'];
             $data['carpool']['terminal_longitude'] = $terminal_longitude;
-            $data['carpool']['terminal_latitude'] = $terminal_latitude;
-            $data['carpool']['time'] = date('Y-m-d H:i',$c_detail['time']);
-            $data['carpool']['number'] = $c_detail['number'];
-            $data['carpool']['price'] = $c_detail['price'];
-            $data['carpool']['license'] = $c_detail['license'];
-            $data['carpool']['car_type'] = $c_detail['car_type'];
-            $data['carpool']['volume'] = $c_detail['volume'];
-            $data['carpool']['weight'] = $c_detail['weight'];
-            $data['carpool']['frequency'] = Carpools::$FREQUENCY[$c_detail['frequency']]['name'];
-            $data['carpool']['remark'] = $c_detail['remark'];
-            $data['carpool']['publish_time'] = Utils::formatTime($c_detail['created_at']);
+            $data['carpool']['terminal_latitude']  = $terminal_latitude;
+            $data['carpool']['time']               = date('Y-m-d H:i', $c_detail['time']);
+            $data['carpool']['origin_date']        = date('Y-m-d', $c_detail['time']);
+            $data['carpool']['origin_time']        = date('H:i', $c_detail['time']);
+            $data['carpool']['number']             = $c_detail['number'];
+            $data['carpool']['price']              = $c_detail['price'];
+            $data['carpool']['license']            = $c_detail['license'];
+            $data['carpool']['car_type']           = $c_detail['car_type'];
+            $data['carpool']['volume']             = $c_detail['volume'];
+            $data['carpool']['weight']             = $c_detail['weight'];
+            $data['carpool']['frequency']          = Carpools::$FREQUENCY[$c_detail['frequency']]['name'];
+            $data['carpool']['frequency_id']       = $c_detail['frequency'];
+            $data['carpool']['remark']             = $c_detail['remark'];
+            $data['carpool']['publish_time']       = Utils::formatTime($c_detail['created_at']);
         }
 
         return $data;
@@ -182,46 +197,63 @@ class CarPoolService
 
     public function myPublishList(Request $request)
     {
-        $token = $request->input('token','');
-        //$token = "31adb99d98561553a8984304cb93f119";
-        $uid = Users::getUidByToken($token);
+        $token  = $request->input('token', '');
+        $uid    = Users::getUidByToken($token);
         $m_data = array();
 
         if ($token && $uid) {
             $my_publish = $this->carpoolRepository->myPublishList($uid);
             if ($my_publish) {
-                foreach ($my_publish->toArray() as $m_key=>$m_value) {
-                    $tmp_data = array();
-                    $tmp_data['avatar'] = $m_value['avatar'];
-                    $tmp_data['origin'] = $m_value['origin'];
-                    $tmp_data['terminal'] = $m_value['terminal'];
-                    $tmp_data['time'] = date('Y-m-d H:i',$m_value['time']);
+                foreach ($my_publish as $m_key => $m_value) {
+                    $tmp_data                 = array();
+                    $tmp_data['id']           = $m_value['id'];
+                    $tmp_data['avatar']       = $m_value['avatar'];
+                    $tmp_data['origin']       = $m_value['origin'];
+                    $tmp_data['terminal']     = $m_value['terminal'];
+                    $tmp_data['time']         = date('Y-m-d H:i', $m_value['time']);
                     $tmp_data['publish_time'] = Utils::formatTime($m_value['created_at']);
                     $tmp_data['publish_time'] = Utils::formatTime($m_value['created_at']);
-                    $tmp_data['status'] = $m_value['status'] == Carpools::STATUS_CANCEL ? '已取消' : ($m_value['time'] < time() ? '已过期' : '进行中');
+                    $tmp_data['type']         = $m_value['type'];
+                    $tmp_data['status']       = $m_value['status'] == Carpools::STATUS_CANCEL ? '已取消' : ($m_value['time'] < time() ? '已过期' : '进行中');
 
-                    array_push($m_data,$tmp_data);
+                    array_push($m_data, $tmp_data);
                 }
             }
 
         }
+
         return $m_data;
     }
 
     public function carpoolCenter(Request $request)
     {
-        $token = $request->input('token','');
+        $token  = $request->input('token', '');
         $u_info = $token ? Users::getInfoByToken($token) : [];
         $c_data = array();
 
-        $user = array('avatar'=>$u_info['avatar'],'name'=>Users::getNameByUid($u_info['id']));
-        $publish = array('image'=>'','title'=>'我的发布','info'=>'','url'=>'');
-        $message = array('image'=>'','title'=>'消息中心','info'=>'','url'=>'');
-        $about = array('image'=>'','title'=>'关于我们','info'=>'','url'=>'');
-        $c_data['user'] = $user;
+        $user             = array('avatar' => $u_info['avatar'], 'name' => Users::getNameByUid($u_info['id']));
+        $publish          = array(
+            'image' => '../../component/images/publish.png',
+            'title' => '我的发布',
+            'info'  => '',
+            'url'   => '../publish_list/index',
+        );
+        $message          = array(
+            'image' => '../../component/images/message.png',
+            'title' => '消息中心',
+            'info'  => '',
+            'url'   => '',
+        );
+        $about            = array(
+            'image' => '../../component/images/about.png',
+            'title' => '关于我们',
+            'info'  => '',
+            'url'   => '',
+        );
+        $c_data['user']   = $user;
         $c_data['menu'][] = $publish;
-        $c_data['menu'][] = $message;
-        $c_data['menu'][] = $about;
+        //$c_data['menu'][] = $message;
+        //$c_data['menu'][] = $about;
 
         return $c_data;
     }

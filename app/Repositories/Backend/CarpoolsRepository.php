@@ -50,6 +50,7 @@ class CarpoolsRepository extends BaseRepository
 
         if ($uid) {
             $c_data['uid']            = $uid;
+            $c_data['id']             = (string)$request->input('id', '');
             $c_data['name']           = (string)$request->input('name', '');
             $c_data['sex']            = (int)$request->input('sex_index', 0);
             $c_data['phone']          = (string)$request->input('phone', '');
@@ -112,8 +113,12 @@ class CarpoolsRepository extends BaseRepository
     //通过uid获取用户发布信息列表
     public function myPublishList($uid)
     {
+        $data = array();
         $p_list = Carpools::leftJoin('users','users.id','=','carpools.uid')->where('carpools.uid',$uid)->select('carpools.*','users.avatar','users.name')->orderBy('carpools.created_at','desc')->get();
 
-        return $p_list;
+        if ($p_list) {
+            $data = $p_list->toArray();
+        }
+        return $data;
     }
 }
