@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\AppBaseController;
 use App\Repositories\Backend\CarpoolsRepository;
 use App\Services\CarPoolService;
+use App\Services\UploadService;
 
 /**
  * Class WeixinController
@@ -14,11 +15,13 @@ use App\Services\CarPoolService;
 class CarpoolApiController extends AppBaseController
 {
     private $carpoolsService;
+    private $uploadService;
 
-    public function __construct(CarpoolsRepository $carpoolRepo, CarPoolService $carpoolSer)
+    public function __construct(CarpoolsRepository $carpoolRepo, CarPoolService $carpoolSer, UploadService $uploadSer)
     {
         $this->carpoolRepository = $carpoolRepo;
         $this->carpoolsService = $carpoolSer;
+        $this->uploadService = $uploadSer;
     }
 
     public function carPoolLogin(Request $request)
@@ -95,6 +98,6 @@ class CarpoolApiController extends AppBaseController
 
     public function test()
     {
-
+        echo 'this is text!';
     }
 }

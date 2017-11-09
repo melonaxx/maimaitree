@@ -411,7 +411,9 @@
     {{-- <script src="/components/AdminLTE/dist/js/pages/dashboard.js"></script> --}}
     <!-- AdminLTE for demo purposes -->
     <script src="/components/AdminLTE/dist/js/demo.js"></script>
-
+    <script type="text/javascript">
+        $('.alert').delay(1000).fadeOut(2000);
+    </script>
     @yield('scripts')
 
 </body>

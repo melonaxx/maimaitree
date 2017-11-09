@@ -44,3 +44,7 @@
     <a href="{!! route('carpools.index') !!}"><i class="fa fa-edit"></i><span>Carpools</span></a>
 </li>
 
+<li class="{{ Request::is('someups*') ? 'active' : '' }}">
+    <a href="{!! route('someups.index') !!}"><i class="fa fa-edit"></i><span>Someups</span></a>
+</li>
+

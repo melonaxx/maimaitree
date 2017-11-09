@@ -37,6 +37,19 @@ class Utils
         return $result;
     }
 
+    public static function formatDisk($size, $format = 'kb') {
+        $p = 0;
+        if ($format == 'kb') {
+            $p = 1;
+        } elseif ($format == 'mb') {
+            $p = 2;
+        } elseif ($format == 'gb') {
+            $p = 3;
+        }
+        $size /= pow(1024, $p);
+        return number_format($size, 3);
+    }
+
     public static function WaitingForReview($app = "GUIXUE")
     {
         $version = self::getAppVersion();
