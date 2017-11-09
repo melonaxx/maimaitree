@@ -92,4 +92,9 @@ class CarpoolApiController extends AppBaseController
         }
 
     }
+
+    public function test()
+    {
+
+    }
 }

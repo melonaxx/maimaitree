@@ -52,6 +52,9 @@ Route::group(['prefix' => 'miniapp',], function () {
     Route::get('/carpoolCenter','CarpoolApiController@carpoolCenter');//我的个人中心
 
 
+    Route::get('/test','CarpoolApiController@test');//测试
+
+
 });
 
 /*鄢陵人网接口*/
