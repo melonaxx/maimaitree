@@ -19,3 +19,5 @@ Route::resource('users', 'UsersController');//拼车用户
 Route::resource('carpools', 'CarpoolsController');//拼车信息
 
 Route::resource('someups', 'SomeupsController');//拼车信息
+
+Route::resource('adminUsers', 'AdminUsersController');//管理者
