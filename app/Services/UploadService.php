@@ -51,7 +51,7 @@ class UploadService
         $file_path = $filePath;
 
         // 上传到七牛后保存的文件名
-        $file_key = basename($file_path);
+        $file_key = mt_rand(1,100000).$originName;
 
         // 调用 UploadManager 的 putFile 方法进行文件的上传。
         list($ret, $err) = self::$_uploadmanager->putFile($token, $file_key, $file_path);
@@ -65,8 +65,8 @@ class UploadService
             return false;
         } else {
             $data['ext'] = $ret['hash'];
-            $data['title'] = $ret['key'];
-            $data['file_name'] = $originName ? :$ret['key'];
+            $data['title'] = $originName ? :$ret['key'];
+            $data['file_name'] = $ret['key'];
         }
 
         $res = $this->someupsRepository->create($data);
