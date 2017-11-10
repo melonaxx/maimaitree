@@ -61,7 +61,7 @@ class AdminUsersController extends AppBaseController
 
         Flash::success('Admin Users saved successfully.');
 
-        return redirect(route('backend.adminUsers.index'));
+        return redirect(route('adminUsers.index'));
     }
 
     /**

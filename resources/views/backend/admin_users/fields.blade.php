@@ -1,59 +1,36 @@
-<!-- Name Field -->
-<div class="form-group col-sm-6">
-    {!! Form::label('name', 'Name:') !!}
-    {!! Form::text('name', null, ['class' => 'form-control']) !!}
+<br/>
+<div class="form-group col-sm-12">
+    {!! Form::label('name', '用户名:',['class'=>'col-sm-5 control-label text-right']) !!}
+    <div class="col-sm-3">
+        {!! Form::text('name', null, ['class' => 'form-control name','required'=>'true']) !!}
+        <span style="color:red;font-size:25px;position: absolute;top: 5px;right: 0px;" class="pull-right">*</span>
+    </div>
 </div>
-
-<!-- Sex Field -->
-<div class="form-group col-sm-6">
-    {!! Form::label('sex', 'Sex:') !!}
-    {!! Form::text('sex', null, ['class' => 'form-control']) !!}
+<div class="form-group col-sm-12">
+    {!! Form::label('email', '邮箱:',['class'=>'col-sm-5 control-label text-right']) !!}
+    <div class="col-sm-3">
+        {!! Form::text('email', null, ['class' => 'form-control email','required'=>'true']) !!}
+        <span style="color:red;font-size:25px;position: absolute;top: 5px;right: 0px;" class="pull-right">*</span>
+    </div>
 </div>
-
-<!-- Email Field -->
-<div class="form-group col-sm-6">
-    {!! Form::label('email', 'Email:') !!}
-    {!! Form::text('email', null, ['class' => 'form-control']) !!}
+<div class="form-group col-sm-12">
+    {!! Form::label('password', '密码:',['class'=>'col-sm-5 control-label text-right']) !!}
+    <div class="col-sm-3">
+        {!! Form::password('password', ['class'=>'form-control','required'=>'true']) !!}
+        <span style="color:red;font-size:25px;position: absolute;top: 5px;right: 0px;" class="pull-right">*</span>
+    </div>
 </div>
-
-<!-- Mobile Field -->
-<div class="form-group col-sm-6">
-    {!! Form::label('mobile', 'Mobile:') !!}
-    {!! Form::text('mobile', null, ['class' => 'form-control']) !!}
-</div>
-
-<!-- Password Field -->
-<div class="form-group col-sm-6">
-    {!! Form::label('password', 'Password:') !!}
-    {!! Form::text('password', null, ['class' => 'form-control']) !!}
-</div>
-
-<!-- Creator Field -->
-<div class="form-group col-sm-6">
-    {!! Form::label('creator', 'Creator:') !!}
-    {!! Form::text('creator', null, ['class' => 'form-control']) !!}
-</div>
-
-<!-- Channel Field -->
-<div class="form-group col-sm-6">
-    {!! Form::label('channel', 'Channel:') !!}
-    {!! Form::text('channel', null, ['class' => 'form-control']) !!}
-</div>
-
-<!-- Status Field -->
-<div class="form-group col-sm-6">
-    {!! Form::label('status', 'Status:') !!}
-    {!! Form::text('status', null, ['class' => 'form-control']) !!}
-</div>
-
-<!-- Remember Token Field -->
-<div class="form-group col-sm-6">
-    {!! Form::label('remember_token', 'Remember Token:') !!}
-    {!! Form::text('remember_token', null, ['class' => 'form-control']) !!}
+<div class="form-group col-sm-12">
+    {!! Form::label('copy_password', '确认密码:',['class'=>'col-sm-5 control-label text-right']) !!}
+    <div class="col-sm-3">
+        {!! Form::text('copy_password', null, ['class' => 'form-control copy_password','required'=>'true']) !!}
+        <span style="color:red;font-size:25px;position: absolute;top: 5px;right: 0px;" class="pull-right">*</span>
+    </div>
 </div>
 
 <!-- Submit Field -->
-<div class="form-group col-sm-12">
-    {!! Form::submit('Save', ['class' => 'btn btn-primary']) !!}
-    <a href="{!! route('adminUsers.index') !!}" class="btn btn-default">Cancel</a>
+<div class="form-group col-sm-12 text-center">
+    {!! Form::submit('保存', ['class' => 'btn btn-primary']) !!}
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <a href="{!! route('adminUsers.index') !!}" class="btn btn-default">取消</a>
 </div>

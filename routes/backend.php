@@ -4,9 +4,9 @@ Route::get('/',function(){
     return view('/backend/backend');
 });
 
-Route::get('login', function(){
+/*Route::get('login', function(){
     return view('/backend/login');
-});
+});*/
 
 Route::resource('tests', 'TestController');//测试
 

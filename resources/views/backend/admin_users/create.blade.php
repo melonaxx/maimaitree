@@ -2,9 +2,20 @@
 
 @section('content')
     <section class="content-header">
-        <h1>
-            Admin Users
+        <h1>Backend用户管理
+            <small>编辑Backend用户</small>
         </h1>
+        <ol class="breadcrumb">
+            <li>
+                <a href="/backend/adminUsers">
+                    <i class="fa fa-dashboard"></i>
+                    Backend用户管理
+                </a>
+            </li>
+            <li class="active">
+                编辑Backend用户
+            </li>
+        </ol>
     </section>
     <div class="content">
         @include('adminlte-templates::common.errors')
